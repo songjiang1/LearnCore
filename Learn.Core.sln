@@ -5,7 +5,13 @@ VisualStudioVersion = 16.0.29519.181
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Web", "Web", "{784A9549-6960-4878-BE38-507594997584}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Learn.Web", "Web\Learn.Web\Learn.Web.csproj", "{25E3E145-1E01-4CC6-B584-E5D665CB9AE9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Learn.Web", "Web\Learn.Web\Learn.Web.csproj", "{25E3E145-1E01-4CC6-B584-E5D665CB9AE9}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Bll", "Bll", "{A92AF0C4-572E-4E0F-B3A0-ED1C196F12A3}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Dal", "Dal", "{D5214D0F-DE29-4003-9927-B5E2E6E5B03F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Application", "Application", "{14A79E0B-9CC0-4430-A904-4299A88AB9AF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

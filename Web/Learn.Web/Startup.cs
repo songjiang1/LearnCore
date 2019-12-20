@@ -1,11 +1,15 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.StaticFiles;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Hosting;
 
 namespace Learn.Web
@@ -36,8 +40,37 @@ namespace Learn.Web
             {
                 app.UseExceptionHandler("/Error");
             }
-
+            //静态文件注册
             app.UseStaticFiles();
+            //自定义静态文件夹 并过滤文件
+            var provider =new FileExtensionContentTypeProvider();
+            provider.Mappings.Remove("gif"); 
+            app.UseStaticFiles(new StaticFileOptions()
+            {
+                FileProvider = new PhysicalFileProvider(
+                Path.Combine(Directory.GetCurrentDirectory(), @"StaticFiles")),
+                RequestPath = new PathString("/StaticFiles"),
+                OnPrepareResponse = ctx =>
+                {
+                    ctx.Context.Response.Headers.Append("Cache-Control", "public,max-age=600");
+                },
+                ContentTypeProvider = provider
+            }); ;
+            ////启用静态文件目录游览
+            //app.UseDirectoryBrowser(new DirectoryBrowserOptions()
+            //{
+            //    FileProvider = new PhysicalFileProvider(
+            //    Path.Combine(Directory.GetCurrentDirectory(), @"StaticFiles")),
+            //    RequestPath = new PathString("/MyStaticFiles")
+            //});
+            ////UseFileServer的功能结合了UseStaticFiles，UseDefaultFiles和UseDirectoryBrowser。
+            //app.UseFileServer(new FileServerOptions()
+            //{
+            //    FileProvider = new PhysicalFileProvider(
+            //    Path.Combine(Directory.GetCurrentDirectory(), @"StaticFiles")),
+            //    RequestPath = new PathString("/StaticFiles"),
+            //    EnableDirectoryBrowsing = true
+            //});
 
             app.UseRouting();
 
