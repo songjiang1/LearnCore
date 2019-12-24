@@ -1,11 +1,9 @@
-﻿using System;
+﻿using Learn.Util;
+using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Data.Common;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
-using YiSha.Util;
 
 namespace Learn.Bll.EF
 {
@@ -15,7 +13,8 @@ namespace Learn.Bll.EF
         {
             using (var db2 = new ContextForQueryType<T>(db.Database.GetDbConnection()))
             {
-                return await db2.Query<T>().FromSql(sql, parameters).ToListAsync();
+                //return await db2.Query<T>().FromSql(sql, parameters).ToListAsync();//FromSql弃用
+                return await db2.Query<T>().FromSqlRaw(sql, parameters).ToListAsync();
             }
         }
 

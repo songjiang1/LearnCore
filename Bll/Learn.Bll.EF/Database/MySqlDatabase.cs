@@ -1,17 +1,16 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Storage;
+using System;
+using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Data;
 using System.Data.Common;
-using System.Data.SqlClient;
-using System.Text.RegularExpressions;
+using System.Linq;
 using System.Linq.Expressions;
-using System.Collections;
-using Microsoft.EntityFrameworkCore.Storage;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata;
+using System.Text;
+using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 
 namespace Learn.Bll.EF
 {
@@ -175,7 +174,8 @@ namespace Learn.Bll.EF
             IEntityType entityType = DbContextExtension.GetEntityType<T>(dbcontext);
             if (entityType != null)
             {
-                string tableName = entityType.Relational().TableName;
+                //string tableName = entityType.Relational().TableName;
+                string tableName = entityType.GetTableName();
                 return await this.ExecuteBySql(DbContextExtension.DeleteSql(tableName));
             }
             return -1;
@@ -205,7 +205,8 @@ namespace Learn.Bll.EF
             IEntityType entityType = DbContextExtension.GetEntityType<T>(dbcontext);
             if (entityType != null)
             {
-                string tableName = entityType.Relational().TableName;
+                //string tableName = entityType.Relational().TableName; 
+                string tableName = entityType.GetTableName();
                 string keyField = "Id";
                 return await this.ExecuteBySql(DbContextExtension.DeleteSql(tableName, keyField, keyValue));
             }
@@ -216,7 +217,8 @@ namespace Learn.Bll.EF
             IEntityType entityType = DbContextExtension.GetEntityType<T>(dbcontext);
             if (entityType != null)
             {
-                string tableName = entityType.Relational().TableName;
+                //string tableName = entityType.Relational().TableName; 
+                string tableName = entityType.GetTableName();
                 string keyField = "Id";
                 return await this.ExecuteBySql(DbContextExtension.DeleteSql(tableName, keyField, keyValue));
             }
@@ -227,7 +229,8 @@ namespace Learn.Bll.EF
             IEntityType entityType = DbContextExtension.GetEntityType<T>(dbcontext);
             if (entityType != null)
             {
-                string tableName = entityType.Relational().TableName;
+                //string tableName = entityType.Relational().TableName;
+                string tableName = entityType.GetTableName();
                 return await this.ExecuteBySql(DbContextExtension.DeleteSql(tableName, propertyName, propertyValue));
             }
             return -1;

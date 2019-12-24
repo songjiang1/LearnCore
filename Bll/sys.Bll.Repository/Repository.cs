@@ -1,5 +1,6 @@
-﻿using System;
-using System.Text;
+﻿using Learn.Util.Model;
+using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Common;
@@ -7,9 +8,6 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
-using YiSha.Util;
-using YiSha.Util.Model;
 
 namespace Learn.Bll.Repository
 {

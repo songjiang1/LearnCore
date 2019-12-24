@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Learn.Bll.EF;
+﻿using Learn.Bll.EF;
 using Learn.Util;
+using System;
 
 namespace Learn.Bll.Repository
 {

@@ -11,6 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\Common\Learn.Util\Learn.Util\Learn.Util.csproj" />
     <ProjectReference Include="..\Learn.Bll.EF\Learn.Bll.EF.csproj" />
     <ProjectReference Include="..\Learn.Bll\Learn.Bll.csproj" />
   </ItemGroup>

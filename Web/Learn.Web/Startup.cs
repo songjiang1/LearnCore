@@ -1,8 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -11,6 +6,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Hosting;
+using System.IO;
+using System.Linq;
 
 namespace Learn.Web
 {
@@ -18,6 +15,7 @@ namespace Learn.Web
     {
         public Startup(IConfiguration configuration)
         {
+            LogHelper.Configure(); //使用前先配置
             Configuration = configuration;
         }
 
@@ -43,8 +41,8 @@ namespace Learn.Web
             //静态文件注册
             app.UseStaticFiles();
             //自定义静态文件夹 并过滤文件
-            var provider =new FileExtensionContentTypeProvider();
-            provider.Mappings.Remove("gif"); 
+            var provider = new FileExtensionContentTypeProvider();
+            provider.Mappings.Remove("gif");
             app.UseStaticFiles(new StaticFileOptions()
             {
                 FileProvider = new PhysicalFileProvider(

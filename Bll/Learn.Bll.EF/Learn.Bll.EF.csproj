@@ -10,4 +10,9 @@
     <PackageReference Include="Oracle.ManagedDataAccess.Core" Version="2.19.3" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\Common\Learn.Util\Learn.Util\Learn.Util.csproj" />
+    <ProjectReference Include="..\Learn.Bll\Learn.Bll.csproj" />
+  </ItemGroup>
+
 </Project>

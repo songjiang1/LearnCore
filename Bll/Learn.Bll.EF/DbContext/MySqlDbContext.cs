@@ -23,7 +23,7 @@ namespace Learn.Bll.EF
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            Assembly entityAssembly = Assembly.Load(new AssemblyName("YiSha.Entity"));
+            Assembly entityAssembly = Assembly.Load(new AssemblyName("Learn.Entity"));
             IEnumerable<Type> typesToRegister = entityAssembly.GetTypes().Where(p => !string.IsNullOrEmpty(p.Namespace))
                                                                          .Where(p => !string.IsNullOrEmpty(p.GetCustomAttribute<TableAttribute>()?.Name));
             foreach (Type type in typesToRegister)
@@ -34,7 +34,8 @@ namespace Learn.Bll.EF
             foreach (var entity in modelBuilder.Model.GetEntityTypes())
             {
                 PrimaryKeyConvention.SetPrimaryKey(modelBuilder, entity.Name);
-                var currentTableName = modelBuilder.Entity(entity.Name).Metadata.Relational().TableName;
+                //var currentTableName = modelBuilder.Entity(entity.Name).Metadata.Relational().TableName; 
+                var currentTableName = modelBuilder.Entity(entity.Name).Metadata.GetTableName();
                 modelBuilder.Entity(entity.Name).ToTable(currentTableName.ToLower());
 
                 var properties = entity.GetProperties();

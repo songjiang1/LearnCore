@@ -6,7 +6,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 
-namespace YiSha.Data
+namespace Learn.Bll
 {
     public interface IDatabase
     {

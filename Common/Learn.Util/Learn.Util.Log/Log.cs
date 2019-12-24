@@ -1,5 +1,4 @@
 ﻿using log4net;
-using System;
 namespace Learn.Util.Log
 {
     /// <summary>
