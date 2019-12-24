@@ -49,5 +49,8 @@
         public string PayKey { get; set; }
         public string NotifyUrl { get; set; }
 
+
+        public string CacheType { get; set; }
+
     }
 }

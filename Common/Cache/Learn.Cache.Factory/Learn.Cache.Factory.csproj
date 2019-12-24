@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Learn.Util\Learn.Util\Learn.Util.csproj" />
+    <ProjectReference Include="..\Learn.Cache.Redis\Learn.Cache.Redis.csproj" />
+    <ProjectReference Include="..\Learn.Cache\Learn.Cache.csproj" />
+  </ItemGroup>
+
+</Project>

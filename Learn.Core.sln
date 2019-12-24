@@ -23,13 +23,21 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Common", "Common", "{D74E9C
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Util", "Util", "{679B8199-B887-4419-9EBB-A3A9E8AEE2A9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Learn.Util", "Common\Learn.Util\Learn.Util\Learn.Util.csproj", "{8638BAEE-0F0F-4888-9755-0A5D8A4AC841}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Learn.Util", "Common\Learn.Util\Learn.Util\Learn.Util.csproj", "{8638BAEE-0F0F-4888-9755-0A5D8A4AC841}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Learn.Util.Extension", "Common\Learn.Util\Learn.Util.Extension\Learn.Util.Extension.csproj", "{C4BB7A25-B31A-45A4-ADA6-058C63407620}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Learn.Util.Extension", "Common\Learn.Util\Learn.Util.Extension\Learn.Util.Extension.csproj", "{C4BB7A25-B31A-45A4-ADA6-058C63407620}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Learn.Util.Model", "Common\Learn.Util\Learn.Util.Model\Learn.Util.Model.csproj", "{1B33498C-EF61-405E-8FBC-B0196FFACF70}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Learn.Util.Model", "Common\Learn.Util\Learn.Util.Model\Learn.Util.Model.csproj", "{1B33498C-EF61-405E-8FBC-B0196FFACF70}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Learn.Util.Log", "Common\Learn.Util\Learn.Util.Log\Learn.Util.Log.csproj", "{72830118-B941-4649-8927-93FA5C373A18}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Learn.Util.Log", "Common\Learn.Util\Learn.Util.Log\Learn.Util.Log.csproj", "{72830118-B941-4649-8927-93FA5C373A18}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Cache", "Cache", "{2E9F8C4F-33F5-4AA2-B7C5-FEACC2055BE9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Learn.Cache", "Common\Cache\Learn.Cache\Learn.Cache.csproj", "{F1485054-25DB-4ABC-AC9E-174B18765E17}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Learn.Cache.Factory", "Common\Cache\Learn.Cache.Factory\Learn.Cache.Factory.csproj", "{102DDB8E-40CC-4F31-9D15-BA200C119E24}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Learn.Cache.Redis", "Common\Cache\Learn.Cache.Redis\Learn.Cache.Redis.csproj", "{ED8BF256-2A41-4132-869A-83C5E4B5225D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -69,6 +77,18 @@ Global
 		{72830118-B941-4649-8927-93FA5C373A18}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{72830118-B941-4649-8927-93FA5C373A18}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{72830118-B941-4649-8927-93FA5C373A18}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F1485054-25DB-4ABC-AC9E-174B18765E17}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F1485054-25DB-4ABC-AC9E-174B18765E17}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F1485054-25DB-4ABC-AC9E-174B18765E17}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F1485054-25DB-4ABC-AC9E-174B18765E17}.Release|Any CPU.Build.0 = Release|Any CPU
+		{102DDB8E-40CC-4F31-9D15-BA200C119E24}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{102DDB8E-40CC-4F31-9D15-BA200C119E24}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{102DDB8E-40CC-4F31-9D15-BA200C119E24}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{102DDB8E-40CC-4F31-9D15-BA200C119E24}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ED8BF256-2A41-4132-869A-83C5E4B5225D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ED8BF256-2A41-4132-869A-83C5E4B5225D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ED8BF256-2A41-4132-869A-83C5E4B5225D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ED8BF256-2A41-4132-869A-83C5E4B5225D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -83,6 +103,10 @@ Global
 		{C4BB7A25-B31A-45A4-ADA6-058C63407620} = {679B8199-B887-4419-9EBB-A3A9E8AEE2A9}
 		{1B33498C-EF61-405E-8FBC-B0196FFACF70} = {679B8199-B887-4419-9EBB-A3A9E8AEE2A9}
 		{72830118-B941-4649-8927-93FA5C373A18} = {679B8199-B887-4419-9EBB-A3A9E8AEE2A9}
+		{2E9F8C4F-33F5-4AA2-B7C5-FEACC2055BE9} = {D74E9C5F-F38A-4638-8011-9868FF5A382F}
+		{F1485054-25DB-4ABC-AC9E-174B18765E17} = {2E9F8C4F-33F5-4AA2-B7C5-FEACC2055BE9}
+		{102DDB8E-40CC-4F31-9D15-BA200C119E24} = {2E9F8C4F-33F5-4AA2-B7C5-FEACC2055BE9}
+		{ED8BF256-2A41-4132-869A-83C5E4B5225D} = {2E9F8C4F-33F5-4AA2-B7C5-FEACC2055BE9}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {80DD607A-2DCA-42CF-BFA9-F62BB0E576E2}
