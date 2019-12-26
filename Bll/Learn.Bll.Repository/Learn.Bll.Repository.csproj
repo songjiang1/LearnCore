@@ -1,0 +1,19 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.0" />
+    <PackageReference Include="MySql.Data.EntityFrameworkCore" Version="8.0.18" />
+    <PackageReference Include="Oracle.ManagedDataAccess.Core" Version="2.19.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Common\Learn.Util\Learn.Util\Learn.Util.csproj" />
+    <ProjectReference Include="..\Learn.Bll.EF\Learn.Bll.EF.csproj" />
+    <ProjectReference Include="..\Learn.Bll\Learn.Bll.csproj" />
+  </ItemGroup>
+
+</Project>

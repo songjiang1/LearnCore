@@ -1,0 +1,15 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Bll\Learn.Bll.Repository\Learn.Bll.Repository.csproj" />
+    <ProjectReference Include="..\..\Bll\Learn.Bll\Learn.Bll.csproj" />
+    <ProjectReference Include="..\Learn.Dal.Entity\Learn.Dal.Entity.csproj" />
+    <ProjectReference Include="..\Learn.Dal.IService\Learn.Dal.IService.csproj" />
+    <ProjectReference Include="..\Learn.Dal.Model\Learn.Dal.Model.csproj" />
+  </ItemGroup>
+
+</Project>
