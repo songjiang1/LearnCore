@@ -1,3 +1,4 @@
+using Learn.Util.Enum;
 using System;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Data;
@@ -194,13 +195,13 @@ namespace sys.Dal.Entity.BaseManage
         /// <summary>
         /// 在线状态
         /// </summary>
-        public int? user_online { get; set; }
+        public Boolean? user_online { get; set; }
 
 
         /// <summary>
         /// 微信OpenId
         /// </summary>
-        public int? openId { get; set; }
+        public string  openId { get; set; }
 
 
         /// <summary>
@@ -338,6 +339,9 @@ namespace sys.Dal.Entity.BaseManage
         /// <summary>
         /// 用户来源 如 1:网站注册，2，APP注册
         /// </summary>
-        public int? usource { get; set; }
+        public PlatformEnum? usource { get; set; }
+
+        public string web_token { get; set; }
+        public string api_token { get; set; }
     }
 }

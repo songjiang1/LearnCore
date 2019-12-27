@@ -5,10 +5,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="SystemManage\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\..\Common\Learn.Util\Learn.Util.Model\Learn.Util.Model.csproj" />
     <ProjectReference Include="..\Learn.Dal.Entity\Learn.Dal.Entity.csproj" />
   </ItemGroup>

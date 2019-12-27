@@ -1,4 +1,10 @@
-﻿using System;
+﻿using Learn.Dal.Service.SystemManage;
+using Learn.Util;
+using Learn.Util.Enum;
+using Learn.Util.Extension;
+using Learn.Util.Model;
+using sys.Dal.Entity.BaseManage;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,90 +16,45 @@ namespace Learn.Dal.Busines.SystemManage
         private UserService userService = new UserService(); 
 
         #region 获取数据
-        public async Task<TData<List<UserEntity>>> GetList(UserListParam param)
-        {
-            TData<List<UserEntity>> obj = new TData<List<UserEntity>>();
-            obj.Result = await userService.GetList(param);
-            obj.TotalCount = obj.TotalCount;
-            obj.Tag = 1;
-            return obj;
-        }
+      
 
-        public async Task<TData<List<UserEntity>>> GetPageList(UserListParam param, Pagination pagination)
-        {
-            TData<List<UserEntity>> obj = new TData<List<UserEntity>>();
-            if (param != null)
-            {
-                if (param.DepartmentId != null)
-                {
-                    param.ChildrenDepartmentIdList = await departmentBLL.GetDepartmentIdList(param.DepartmentId.Value);
-                }
-            }
-            obj.Result = await userService.GetPageList(param, pagination);
-            List<UserBelongEntity> userBelongList = await userBelongService.GetList(new UserBelongEntity { UserIds = obj.Result.Select(p => p.Id.Value).ParseToStrings<long>() });
-            List<DepartmentEntity> departmentList = await departmentService.GetList(new DepartmentListParam { Ids = userBelongList.Select(p => p.BelongId.Value).ParseToStrings<long>() });
-            foreach (UserEntity user in obj.Result)
-            {
-                user.DepartmentName = departmentList.Where(p => p.Id == user.DepartmentId).Select(p => p.DepartmentName).FirstOrDefault();
-            }
-            obj.TotalCount = pagination.TotalCount;
-            obj.Tag = 1;
-            return obj;
-        }
+        
 
-        public async Task<TData<UserEntity>> GetEntity(long id)
+        public async Task<TData<UserEntity>> GetEntity(string id)
         {
             TData<UserEntity> obj = new TData<UserEntity>();
-            obj.Result = await userService.GetEntity(id);
-
-            await GetUserBelong(obj.Result);
-
-            if (obj.Result.DepartmentId > 0)
-            {
-                DepartmentEntity departmentEntity = await departmentService.GetEntity(obj.Result.DepartmentId.Value);
-                if (departmentEntity != null)
-                {
-                    obj.Result.DepartmentName = departmentEntity.DepartmentName;
-                }
-            }
-
-            obj.Tag = 1;
+            obj.Result = await userService.GetEntity(id); 
+            //await GetUserBelong(obj.Result); 
+            obj.Tag = RequestTypeEnum.Success;
             return obj;
         }
 
-        public async Task<TData<UserEntity>> CheckLogin(string userName, string password, int platform)
+        public async Task<TData<UserEntity>> CheckLogin(string userName, string password, int platform=1)
         {
             TData<UserEntity> obj = new TData<UserEntity>();
+            obj.Tag = RequestTypeEnum.Error;
             if (userName.IsEmpty() || password.IsEmpty())
             {
-                obj.Message = "用户名或密码不能为空";
+                obj.Msg = "用户名或密码不能为空";
                 return obj;
             }
             UserEntity user = await userService.CheckLogin(userName);
             if (user != null)
             {
-                if (user.UserStatus == (int)StatusEnum.Yes)
+                if (user.is_enabled == false)
                 {
-                    if (user.Password == EncryptUserPassword(password, user.Salt))
+                    string dbPassword = Md5Helper.MD5(DESEncrypt.Encrypt(password.ToLower(), user.secret_key).ToLower(), 32).ToLower();
+                    if (user.user_password == dbPassword)
                     {
-                        user.LoginCount++;
-                        user.IsOnline = 1;
-
-                        #region 设置日期
-                        if (user.FirstVisit == GlobalConstant.DefaultTime)
+                        user.logon_count= user.logon_count.ParseToInt()+1;
+                        user.user_online = true;
+                        if (user.last_visit != null)
                         {
-                            user.FirstVisit = DateTime.Now;
+                            user.previous_visit = user.last_visit.ToDate();
                         }
-                        if (user.PreviousVisit == GlobalConstant.DefaultTime)
-                        {
-                            user.PreviousVisit = DateTime.Now;
-                        }
-                        if (user.LastVisit != GlobalConstant.DefaultTime)
-                        {
-                            user.PreviousVisit = user.LastVisit;
-                        }
-                        user.LastVisit = DateTime.Now;
-                        #endregion
+                        user.last_visit = DateTime.Now;  
+                        
+                         
 
                         switch (platform)
                         {
@@ -101,41 +62,41 @@ namespace Learn.Dal.Busines.SystemManage
                                 if (GlobalContext.SystemConfig.LoginMultiple)
                                 {
                                     #region 多次登录用同一个token
-                                    if (string.IsNullOrEmpty(user.WebToken))
+                                    if (string.IsNullOrEmpty(user.web_token))
                                     {
-                                        user.WebToken = SecurityHelper.GetGuid();
+                                        user.web_token = Md5Helper.GetGuid();
                                     }
                                     #endregion
                                 }
                                 else
                                 {
-                                    user.WebToken = SecurityHelper.GetGuid();
+                                    user.web_token = Md5Helper.GetGuid();
                                 }
                                 break;
 
                             case (int)PlatformEnum.WebApi:
-                                user.ApiToken = SecurityHelper.GetGuid();
+                                user.api_token = Md5Helper.GetGuid();
                                 break;
                         }
-                        await GetUserBelong(user);
+                        //await GetUserBelong(user);
 
                         obj.Result = user;
-                        obj.Message = "登录成功";
-                        obj.Tag = 1;
+                        obj.Msg = "登录成功";
+                        obj.Tag = RequestTypeEnum.Success;
                     }
                     else
                     {
-                        obj.Message = "密码不正确，请重新输入";
+                        obj.Msg = "密码不正确，请重新输入";
                     }
                 }
                 else
                 {
-                    obj.Message = "账号被禁用，请联系管理员";
+                    obj.Msg = "账号被禁用，请联系管理员";
                 }
             }
             else
             {
-                obj.Message = "账号不存在，请重新输入";
+                obj.Msg = "账号不存在，请重新输入";
             }
             return obj;
         }

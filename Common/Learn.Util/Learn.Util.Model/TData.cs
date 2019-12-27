@@ -1,4 +1,6 @@
-﻿namespace Learn.Util.Model
+﻿using Learn.Util.Enum;
+
+namespace Learn.Util.Model
 {
     /// <summary>
     /// 数据传输对象
@@ -8,7 +10,7 @@
         /// <summary>
         /// 操作结果，Tag为1代表成功，0代表失败，其他的验证返回结果，可根据需要设置
         /// </summary>
-        public int Tag { get; set; }
+        public RequestTypeEnum Tag { get; set; }
 
         /// <summary>
         /// 提示信息或异常信息

@@ -84,6 +84,19 @@ namespace Learn.Util.Extension
             }
         }
         #endregion
+        #region 日期转换
+        /// <summary>
+        /// 转换为日期
+        /// </summary>
+        /// <param name="data">数据</param>
+        public static DateTime ToDate(this object data)
+        {
+            if (data == null)
+                return DateTime.MinValue;
+            DateTime result;
+            return DateTime.TryParse(data.ToString(), out result) ? result : DateTime.MinValue;
+        }
+        #endregion
 
         #region 转换为short
         /// <summary>

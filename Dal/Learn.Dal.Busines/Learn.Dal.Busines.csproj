@@ -4,4 +4,10 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\Common\Learn.Util\Learn.Util.Enum\Learn.Util.Enum.csproj" />
+    <ProjectReference Include="..\..\Common\Learn.Util\Learn.Util\Learn.Util.csproj" />
+    <ProjectReference Include="..\Learn.Dal.Service\Learn.Dal.Service.csproj" />
+  </ItemGroup>
+
 </Project>
