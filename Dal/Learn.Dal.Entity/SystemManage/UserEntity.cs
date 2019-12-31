@@ -1,21 +1,23 @@
+using Learn.Dal.Entity;
 using Learn.Util.Enum;
 using System;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Data;
-namespace sys.Dal.Entity.BaseManage
+namespace Learn.Dal.Entity.BaseManage
 {
     /// <summary>
     /// 
     /// </summary>
     /// 
     [Table("sys_user")]
-    public class UserEntity
+    public class UserEntity: BaseEntity
     {
-
+        [Key]
         /// <summary>
         /// 用户主键
         /// </summary>
-        public string user_id { get; set; }
+        public string id { get; set; }
 
 
         /// <summary>
@@ -195,13 +197,13 @@ namespace sys.Dal.Entity.BaseManage
         /// <summary>
         /// 在线状态
         /// </summary>
-        public Boolean? user_online { get; set; }
+        public Boolean user_online { get; set; }
 
 
         /// <summary>
         /// 微信OpenId
         /// </summary>
-        public string  openId { get; set; }
+        public string  open_id { get; set; }
 
 
         /// <summary>
@@ -225,7 +227,7 @@ namespace sys.Dal.Entity.BaseManage
         /// <summary>
         /// 允许多用户同时登录
         /// </summary>
-        public int? check_online { get; set; }
+        public Boolean check_online { get; set; }
 
 
         /// <summary>
@@ -285,13 +287,13 @@ namespace sys.Dal.Entity.BaseManage
         /// <summary>
         /// 删除标记
         /// </summary>
-        public Boolean? is_delete { get; set; }
+        public Boolean  is_delete { get; set; }
 
 
         /// <summary>
         /// 有效标志
         /// </summary>
-        public Boolean? is_enabled { get; set; }
+        public Boolean  is_enabled { get; set; }
 
 
         /// <summary>
@@ -299,43 +301,7 @@ namespace sys.Dal.Entity.BaseManage
         /// </summary>
         public string description { get; set; }
 
-
-        /// <summary>
-        /// 创建日期
-        /// </summary>
-        public DateTime? create_date { get; set; }
-
-
-        /// <summary>
-        /// 创建用户主键
-        /// </summary>
-        public string create_user_id { get; set; }
-
-
-        /// <summary>
-        /// 创建用户
-        /// </summary>
-        public string create_user_name { get; set; }
-
-
-        /// <summary>
-        /// 修改日期
-        /// </summary>
-        public DateTime? modify_date { get; set; }
-
-
-        /// <summary>
-        /// 修改用户主键
-        /// </summary>
-        public string modify_user_id { get; set; }
-
-
-        /// <summary>
-        /// 修改用户
-        /// </summary>
-        public string modify_user_name { get; set; }
-
-
+         
         /// <summary>
         /// 用户来源 如 1:网站注册，2，APP注册
         /// </summary>

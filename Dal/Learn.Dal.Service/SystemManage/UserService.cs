@@ -8,7 +8,7 @@ using System.Linq.Expressions;
 using System.Data;
 using System.Data.Common;
 using Learn.Bll.Repository;
-using sys.Dal.Entity.BaseManage;
+using Learn.Dal.Entity.BaseManage;
 using Learn.Dal.Model.Param.SystemManage;
 using Learn.Util.Model;
 using Learn.Dal.Service.Base;
@@ -29,11 +29,10 @@ namespace Learn.Dal.Service.SystemManage
         public async Task<UserEntity> CheckLogin(string userName)
         {
             var expression = LinqExtensions.True<UserEntity>();
-            expression = expression.And(t => t.real_name == userName);
-            expression = expression.Or(t => t.user_account == userName);
+            expression = expression.And(t => t.user_account == userName); 
             expression = expression.Or(t => t.mobile == userName);
             expression = expression.Or(t => t.email == userName); 
-            return await this.BaseRepository().FindEntity(expression);
+            return await this.BaseRepository().FindEntity(expression);  
         }
 
         #endregion

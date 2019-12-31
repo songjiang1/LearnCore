@@ -1,17 +1,20 @@
 using System;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Data;
-namespace sys.Dal.Entity.BaseManage
+namespace Learn.Dal.Entity.BaseManage
 {
+    [Table("sys_role")]
     /// <summary>
     /// 
     /// </summary>
     public class RroleEntity
     {
-       
+        [Key]
         /// <summary>
         /// 角色主键
         /// </summary>
-        public string role_id { get ; set  ; }
+        public string  id { get ; set  ; }
 
        
         /// <summary>

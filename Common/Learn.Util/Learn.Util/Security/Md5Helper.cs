@@ -5,6 +5,7 @@
 using System;
 using System.Security.Cryptography;
 using System.Text;
+using System.Text.RegularExpressions;
 
 namespace Learn.Util
 {
@@ -47,6 +48,10 @@ namespace Learn.Util
         public static string GetGuid()
         {
             return Guid.NewGuid().ToString().Replace("-", string.Empty).ToLower();
+        }
+        public static bool IsSafeSqlParam(string value)
+        {
+            return !Regex.IsMatch(value, @"[-|;|,|\/|\(|\)|\[|\]|\}|\{|%|@|\*|!|\']");
         }
         #endregion
     }

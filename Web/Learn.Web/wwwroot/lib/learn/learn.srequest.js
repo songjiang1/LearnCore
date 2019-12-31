@@ -10,11 +10,12 @@ var defaults_req = {
     wait: null,
     code: 0,
 };
-var sys = {
+var Learn = {
     req: function (options) {
         var defaults = defaults_req;
         defaults = $.extend(defaults, options);
         var senddata = '';
+        defaults.method = defaults.method.toUpperCase();
         defaults.$async = defaults.$async == undefined ? true : false;
         defaults.wait = defaults.wait == undefined ? "" : defaults.wait;
         if (defaults.wait) { }
@@ -27,10 +28,14 @@ var sys = {
                 senddata = defaults.data.toString();
         } else {
             defaults.url = defaults.url + '?' + Signature(defaults.data);
-        } 
-        defaults.url = SRequest_apihost + defaults.url;
+        }
+        //defaults.url = SRequest_apihost + defaults.url;
+        defaults.url = defaults.url;
         $.ajax({
             type: defaults.method,
+            headers: {
+                'Access-Token': $.cookie('access_token')
+            },
             data: senddata,
             dataType: 'json',
             async: defaults.$async,
@@ -64,7 +69,8 @@ var sys = {
                     layer.msg(obj.msg);
                 }
                 
-            }
+            },
+             
         });
     },
     Get: function (options) {  var defaults = defaults_req;  defaults.method = "GET";  defaults = $.extend(defaults, options);  this.req(defaults);   },

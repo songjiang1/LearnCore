@@ -2,9 +2,9 @@
 {
     public class RepositoryFactory<T> where T : class, new()
     {
-        public Repository BaseRepository()
-        {
-            return new Repository(DbFactory.Base());
+        public Repository<T> BaseRepository()
+        { 
+            return new Repository<T>(DbFactory.Base());
         }
     }
 }

@@ -1,6 +1,6 @@
 
 using Learn.Dal.IService.Base;
-using sys.Dal.Entity.BaseManage;
+using Learn.Dal.Entity.BaseManage;
 using System.Threading.Tasks;
 
 namespace Learn.Dal.IService

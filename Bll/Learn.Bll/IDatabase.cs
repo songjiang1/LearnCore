@@ -28,7 +28,9 @@ namespace Learn.Bll
         Task<int> Delete<T>(IEnumerable<T> entities) where T : class;
         Task<int> Delete<T>(Expression<Func<T, bool>> condition) where T : class, new();
         Task<int> Delete<T>(long id) where T : class;
+        Task<int> Delete<T>(string id) where T : class;
         Task<int> Delete<T>(long[] id) where T : class;
+        Task<int> Delete<T>(string[] id) where T : class;
         Task<int> Delete<T>(string propertyName, long propertyValue) where T : class;
 
         Task<int> Update<T>(T entity) where T : class;

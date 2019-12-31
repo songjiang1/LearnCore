@@ -1,8 +1,9 @@
 using System;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Data;
 
-namespace sys.Dal.Entity.BaseManage
+namespace Learn.Dal.Entity.BaseManage
 {
     /// <summary>
     /// 
@@ -11,11 +12,23 @@ namespace sys.Dal.Entity.BaseManage
     [Table("sys_log")]
     public class LogEntity
     {
-       
+        //通过Attribute配置约束
+        //[Key]//主键约束 public int PrimaryKey{ get; set; }
+        //[ForeignKey("ForeignKey")] //外键约束public int PrimaryKey{ get; set; } 
+        //[StringLength(30)]//普通长度约束public string Name { get; set; }
+        //[MaxLength(30)]//最大长度约束public string Name { get; set; }
+        //[MinLength(30)]//最小长度约束public string Name { get; set; }
+        //[Required]//非空约束public string Name{ get; set; }
+        //[Column(TypeName = "byte")]//数据类型约束public string Photo{get;set;}
+        //[Column("CTime")]//字段名约束public DateTime CreateTime { get; set; }
+        //[Table("Class")]//表名约束public class ClassInfo {  }
+        //[Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]//列值GUID化public GUID Id{ get; set; } 
+
+        [Key]
         /// <summary>
         /// 日志主键
         /// </summary>
-        public string log_id { get ; set  ; }
+        public string id { get ; set  ; }
 
        
         /// <summary>

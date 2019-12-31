@@ -10,7 +10,7 @@ namespace Learn.Bll.EF
     {
         public static void SetPrimaryKey(ModelBuilder modelBuilder, string entityName)
         {
-            modelBuilder.Entity(entityName).HasKey("Id");
+            modelBuilder.Entity(entityName).HasKey("id");
         }
     }
 

@@ -1,17 +1,20 @@
 using System;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Data;
-namespace sys.Dal.Entity.BaseManage
+namespace Learn.Dal.Entity.BaseManage
 {
+    [Table("sys_user_relation")]
     /// <summary>
     /// 
     /// </summary>
     public class UserRelationEntity
     {
-       
+        [Key]
         /// <summary>
         /// 用户关系主键
         /// </summary>
-        public string user_relation_id { get ; set  ; }
+        public string  id { get ; set  ; }
 
        
         /// <summary>

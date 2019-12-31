@@ -5,15 +5,18 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Handle\" />
     <Folder Include="Areas\" />
     <Folder Include="StaticFiles\" />
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="BuildBundlerMinifier" Version="3.0.415" />
     <PackageReference Include="log4net" Version="2.0.8" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Cors" Version="2.2.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.0" />
     <PackageReference Include="Microsoft.Extensions.Caching.Redis" Version="2.2.0" />
     <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="3.1.0" />
+    <PackageReference Include="Microsoft.NETCore.App" Version="2.2.8" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.0" />
   </ItemGroup>
 
@@ -22,6 +25,7 @@
     <ProjectReference Include="..\..\Common\Learn.Util\Learn.Util.Model\Learn.Util.Model.csproj" />
     <ProjectReference Include="..\..\Dal\Learn.Dal.Busines\Learn.Dal.Busines.csproj" />
     <ProjectReference Include="..\..\Dal\Learn.Dal.Entity\Learn.Dal.Entity.csproj" />
+    <ProjectReference Include="..\Learn.Web.Code\Learn.Web.Code.csproj" />
   </ItemGroup>
 
 

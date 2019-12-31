@@ -23,7 +23,7 @@ namespace Learn.Bll.EF
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            Assembly entityAssembly = Assembly.Load(new AssemblyName("Learn.Entity"));
+            Assembly entityAssembly = Assembly.Load(new AssemblyName("Learn.Dal.Entity"));
             IEnumerable<Type> typesToRegister = entityAssembly.GetTypes().Where(p => !string.IsNullOrEmpty(p.Namespace))
                                                                          .Where(p => !string.IsNullOrEmpty(p.GetCustomAttribute<TableAttribute>()?.Name));
             foreach (Type type in typesToRegister)

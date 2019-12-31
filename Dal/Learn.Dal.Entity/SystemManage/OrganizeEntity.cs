@@ -1,17 +1,20 @@
 using System;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Data; 
-namespace sys.Dal.Entity.BaseManage
+namespace Learn.Dal.Entity.BaseManage
 {
+    [Table("sys_organize")]
     /// <summary>
     /// 
     /// </summary>
     public class OrganizeEntity
     {
-       
+        [Key]
         /// <summary>
         /// 机构主键
         /// </summary>
-        public string organize_id { get ; set  ; }
+        public string  id { get ; set  ; }
 
        
         /// <summary>

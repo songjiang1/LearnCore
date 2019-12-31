@@ -8,4 +8,15 @@
     <ProjectReference Include="..\..\Common\Learn.Util\Learn.Util.Enum\Learn.Util.Enum.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="实体关系配置说明.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>实体关系配置说明.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Service Include="{508349b6-6b84-4df5-91f0-309beebad82d}" />
+  </ItemGroup>
+
 </Project>

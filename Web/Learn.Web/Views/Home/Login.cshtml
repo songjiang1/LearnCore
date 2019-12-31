@@ -12,7 +12,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
     <link rel="stylesheet" href="@Url.Content("~/lib/layui2.5.5/layui/css/layui.css")" media="all">
-    <link rel="stylesheet" href="@Url.Content("~/lib/layui2.5.5/layui/style/admin.css")" media="all">
+    <link rel="stylesheet" href="@Url.Content("~/lib/layui2.5.5/style/admin.css")" media="all">
     <link rel="stylesheet" href="@Url.Content("~/css/login.css")" media="all"> 
 </head>
 <body>
@@ -78,14 +78,31 @@
             form.on('submit(LAY-user-login-submit)', function (obj) {
                 obj.field.password = $.md5(obj.field.password);
                 //请求登入接口
-                sys.req({
-                    url: sys.GetHost() + '/Home/Login',
-                    data: obj.field,
-                    meooth: "post",
-                    done: function (res) {
-                        location.href = '/Home/AdminDefault'; //后台主页
-                    }
-                });
+                //Learn.req({
+                //    url: Learn.GetHost() + '/Home/Login',
+                //    data: obj.field,
+                //    method: "post",
+                //    done: function (res) {
+                //        location.href = '/Home/AdminDefault'; //后台主页
+                //    }
+                //});
+                $.ajax({
+				    url:"@Url.Content("/Home/Login")",//地址
+				    dataType:'json',//数据类型
+                    type: 'POST',//类型
+                    data: obj.field, 
+				    //请求成功
+				    success:function(data,status){
+					     alert(data);
+					//alert(status);
+				    },
+				//失败/超时
+                    error: function (XMLHttpRequest, textStatus, errorThrown) {
+                        debugger;
+					alert('請求超時');
+					//alert(errorThrown);
+				}
+            });
 
             });
         });

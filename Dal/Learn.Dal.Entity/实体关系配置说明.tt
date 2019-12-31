@@ -1,0 +1,110 @@
+﻿一、通过Attribute配置约束
+
+1、主键约束
+
+通过KeyAttribute来配置主键约束,代码如下:
+
+[Key]
+public int PrimaryKey{ get; set; }
+ 
+
+2、外键约束
+
+通过ForeignKeyAttribute来配置外键约束,代码如下:
+
+[Key]
+public int PrimaryKey{ get; set; }
+[ForeignKey("ForeignKey")]
+public int PrimaryKey{ get; set; }
+ 
+
+ 
+
+3、长度约束
+
+(1)、普通长度约束,通过StringLengthAttribute来配置普通长度约束,代码如下:
+
+[StringLength(30)]
+public string Name { get; set; }
+(2)、最大长度约束,通过MaxLengthAttribute,代码如下:
+
+[MaxLength(30)]
+public string Name { get; set; }
+(3)、最小长度约束,通过MinLengthAttribute,代码如下:
+
+[MinLength(30)]
+public string Name { get; set; }
+ 
+
+4、非空约束
+
+非空约束比较简单,通过RequiredAttribute,代码如下:
+
+[Required]
+public string Name{ get; set; }
+ 
+
+5、数据类型约束
+
+通过初始化ColumnAttribute类的TypeName属性来配置数据类型约束,代码如下:
+
+[Column(TypeName="byte")]
+public string Photo{get;set;}
+ 
+
+6、字段名约束
+
+通过初始化ColumnAttribute类的带string参数的构造函数设置,代码如下:
+
+[Column("CTime")]
+public DateTime CreateTime { get; set; }
+ 
+
+7、表名约束
+
+通过TableAttribute类的带string参数的构造函数设置,代码如下:
+
+[Table("Class")]
+public class ClassInfo
+{}
+ 
+
+8、列值GUID化
+
+当主键值需要自GUID化,则需要在对主键字段设置主键约束的基础上追加DatabaseGenerated特性,代码如下:
+
+[Key,DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+public GUID Id{ get; set; }
+ 
+
+9、列值+DatabaseGeneratedOption.Computed
+
+[Key,DatabaseGenerated(DatabaseGeneratedOption.Computed)]
+public GUID Id{ get; set; }
+如果将属性标识为Computed，EF会认为该列是通过其它列计算得出的，不会将其持久化到数据库中。
+
+ 
+
+10、列值+DatabaseGeneratedOption.None
+
+[Key,DatabaseGenerated(DatabaseGeneratedOption.None)]
+public int Id{ get; set; }
+这个就等同于Id主键自增效果
+
+ 
+
+11、忽略列映射
+
+当实体类中定义了某些字段,这些字段是通过一些计算或者合并得到的,我们并不需要将它同步到数据库中,就可以通过配置不让它生成到数据库中,EF中通过NotMappedAttribute特性来设置,代码如下:
+
+[NotMapped]
+public string NotNeeded { get; set; }
+ 
+
+12、忽略表映射
+
+忽略表映射和忽略列映射一样. 代码如下:
+
+[NotMapped]
+public class ClassInfo
+{} 

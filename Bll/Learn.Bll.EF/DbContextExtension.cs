@@ -59,6 +59,42 @@ namespace Learn.Bll.EF
             strSql.Append(")");
             return strSql.ToString();
         }
+        /// <summary>
+        /// 拼接删除SQL语句
+        /// </summary>
+        /// <param name="tableName">表名</param>
+        /// <param name="propertyName">实体属性名称</param>
+        /// <param name="propertyValue">字段值：数组1,2,3,4,5,6.....</param>
+        /// <returns></returns>
+        public static string DeleteSql(string tableName, string propertyName, string propertyValue)
+        {
+            StringBuilder strSql = new StringBuilder("delete from " + tableName + " where " + propertyName + " = " + propertyValue + "");
+            return strSql.ToString();
+        }
+        /// <summary>
+        /// 拼接批量删除SQL语句
+        /// </summary>
+        /// <param name="tableName">表名</param>
+        /// <param name="propertyName">实体属性名称</param>
+        /// <param name="propertyValue">字段值：数组1,2,3,4,5,6.....</param>
+        /// <returns></returns>
+        public static string DeleteSql(string tableName, string propertyName, string[] propertyValue)
+        {
+            StringBuilder strSql = new StringBuilder("delete from " + tableName + " where " + propertyName + " IN (");
+            for (long i = 0; i < propertyValue.Length; i++)
+            {
+                if (i == 0)
+                {
+                    strSql.Append(propertyValue[i]);
+                }
+                else
+                {
+                    strSql.Append("," + propertyValue[i]);
+                }
+            }
+            strSql.Append(")");
+            return strSql.ToString();
+        }
 
         /// <summary>
         /// 获取实体映射对象

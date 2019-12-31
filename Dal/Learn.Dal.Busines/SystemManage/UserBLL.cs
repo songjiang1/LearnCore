@@ -3,7 +3,7 @@ using Learn.Util;
 using Learn.Util.Enum;
 using Learn.Util.Extension;
 using Learn.Util.Model;
-using sys.Dal.Entity.BaseManage;
+using Learn.Dal.Entity.BaseManage;
 using System;
 using System.Collections.Generic;
 using System.Linq;

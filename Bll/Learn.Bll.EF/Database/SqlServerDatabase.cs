@@ -207,7 +207,7 @@ namespace Learn.Bll.EF
             {
                 //string tableName = entityType.Relational().TableName;
                 string tableName = entityType.GetTableName();
-                string keyField = "Id";
+                string keyField = "id";
                 return await this.ExecuteBySql(DbContextExtension.DeleteSql(tableName, keyField, keyValue));
             }
             return -1;
@@ -219,7 +219,31 @@ namespace Learn.Bll.EF
             {
                 //string tableName = entityType.Relational().TableName; 
                 string tableName = entityType.GetTableName();
-                string keyField = "Id";
+                string keyField = "id";
+                return await this.ExecuteBySql(DbContextExtension.DeleteSql(tableName, keyField, keyValue));
+            }
+            return -1;
+        }
+        public async Task<int> Delete<T>(string keyValue) where T : class
+        {
+            IEntityType entityType = DbContextExtension.GetEntityType<T>(dbcontext);
+            if (entityType != null)
+            {
+                //string tableName = entityType.Relational().TableName;
+                string tableName = entityType.GetTableName();
+                string keyField = "id";
+                return await this.ExecuteBySql(DbContextExtension.DeleteSql(tableName, keyField, keyValue));
+            }
+            return -1;
+        }
+        public async Task<int> Delete<T>(string[] keyValue) where T : class
+        {
+            IEntityType entityType = DbContextExtension.GetEntityType<T>(dbcontext);
+            if (entityType != null)
+            {
+                //string tableName = entityType.Relational().TableName; 
+                string tableName = entityType.GetTableName();
+                string keyField = "id";
                 return await this.ExecuteBySql(DbContextExtension.DeleteSql(tableName, keyField, keyValue));
             }
             return -1;
@@ -242,7 +266,7 @@ namespace Learn.Bll.EF
             Hashtable props = ConvertExtension.GetPropertyInfo<T>(entity);
             foreach (string item in props.Keys)
             {
-                if (item == "Id")
+                if (item == "id")
                 {
                     continue;
                 }
