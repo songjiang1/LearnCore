@@ -23,8 +23,7 @@ namespace Learn.Dal.Busines.SystemManage
         public async Task<TData<UserEntity>> GetEntity(string id)
         {
             TData<UserEntity> obj = new TData<UserEntity>();
-            obj.Result = await userService.GetEntity(id); 
-            //await GetUserBelong(obj.Result); 
+            obj.Result = await userService.GetBaseEntity(id);  
             obj.Tag = RequestTypeEnum.Success;
             return obj;
         }

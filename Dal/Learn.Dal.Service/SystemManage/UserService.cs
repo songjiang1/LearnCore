@@ -22,7 +22,7 @@ namespace Learn.Dal.Service.SystemManage
         #region 获取数据
         public  Task<List<UserEntity>> GetList(UserListParam param)
         {
-            var list = GetList();
+            var list = GetBaseList();
             return list;
         }
 

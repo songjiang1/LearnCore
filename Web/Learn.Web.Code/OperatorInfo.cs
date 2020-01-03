@@ -9,44 +9,26 @@ namespace Learn.Web.Code
 {
     public class OperatorInfo
     {
-        public string  UserId { get; set; }
-        [NotMapped]
-        public int? UserStatus { get; set; }
+        public string  UserId { get; set; } 
         public bool IsOnline { get; set; }
-        [NotMapped]
+        
         public string Account { get; set; }
-        [NotMapped]
+        
         public string RealName { get; set; }
         public string NickName { get; set; }
-        [NotMapped]
+        
         public string WebToken { get; set; }
-        [NotMapped]
+        
         public string ApiToken { get; set; }
-        [NotMapped]
-        public int? IsSystem { get; set; }
-        [NotMapped]
-        public string Portrait { get; set; }
+        
+        public bool IsSystem { get; set; }
+        
+        public string HeadIcon { get; set; }
         [NotMapped] 
-        public string  DepartmentId { get; set; }
-
-        [NotMapped]
-        public string DepartmentName { get; set; }
-
         /// <summary>
-        /// 岗位Id
+        /// 用户数据权限
         /// </summary>
-        [NotMapped]
-        public string PositionIds { get; set; }
-
-        /// <summary>
-        /// 角色Id
-        /// </summary>
-        [NotMapped]
-        public string RoleIds { get; set; }
+        public AuthorizeDataModel DataAuthorize { get; set; }
     }
-    public class RoleInfo
-    {
-        public long RoleId { get; set; }
-    }
-
+    
 }

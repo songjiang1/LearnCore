@@ -122,11 +122,22 @@ namespace Learn.Util
             }
             catch (Exception ex)
             {
-                //LogHelper.WriteWithTime(ex);
+                LogHelper.Error(ex.Message);
             }
             return string.Empty;
         }
+        /// <summary>
+        /// 获取主机名
+        /// </summary>
+        public static string Host
+        {
+            get
+            {
+                return HttpContext == null ? Dns.GetHostName() : GetWebClientHostName();
+            }
+        }
 
+    
 
         private static string GetWebClientHostName()
         {
@@ -142,7 +153,7 @@ namespace Learn.Util
             }
             catch (Exception ex)
             {
-                //LogHelper.WriteWithTime(ex);
+                LogHelper.Error(ex.Message);
             }
             return result;
         }
@@ -155,31 +166,30 @@ namespace Learn.Util
                 {
                     var browser = HttpContext.Request.Headers["User-Agent"];
 
-                    var agent = UserAgent.ToString();
-
-                    //var ie = new InternetExplorer(agent);
-                    //if (ie.Type == BrowserType.IE)
-                    //    return string.Format("{0} {1}", ie.Type.ToString(), ie.Version);
-                    //var firefox = new Firefox(agent);
-                    //if (firefox.Type == BrowserType.Firefox)
-                    //    return string.Format("{0} {1}", firefox.Type.ToString(), firefox.Version);
-                    //var edge = new Edge(agent);
-                    //if (edge.Type == BrowserType.Edge)
-                    //    return string.Format("{0} {1}", edge.Type.ToString(), edge.Version);
-                    //var opera = new Opera(agent);
-                    //if (opera.Type == BrowserType.Opera)
-                    //    return string.Format("{0} {1}", opera.Type.ToString(), opera.Version);
-                    //var chrome = new Chrome(agent);
-                    //if (chrome.Type == BrowserType.Chrome)
-                    //    return string.Format("{0} {1}", chrome.Type.ToString(), chrome.Version);
-                    //var safari = new Safari(agent);
-                    //if (safari.Type == BrowserType.Safari)
-                    //    return string.Format("{0} {1}", safari.Type.ToString(), safari.Version);
+                    var agent = UserAgent.ToString(); 
+                    var ie = new InternetExplorer(agent);
+                    if (ie.Type == BrowserType.IE)
+                        return string.Format("{0} {1}", ie.Type.ToString(), ie.Version);
+                    var firefox = new Firefox(agent);
+                    if (firefox.Type == BrowserType.Firefox)
+                        return string.Format("{0} {1}", firefox.Type.ToString(), firefox.Version);
+                    var edge = new Edge(agent);
+                    if (edge.Type == BrowserType.Edge)
+                        return string.Format("{0} {1}", edge.Type.ToString(), edge.Version);
+                    var opera = new Opera(agent);
+                    if (opera.Type == BrowserType.Opera)
+                        return string.Format("{0} {1}", opera.Type.ToString(), opera.Version);
+                    var chrome = new Chrome(agent);
+                    if (chrome.Type == BrowserType.Chrome)
+                        return string.Format("{0} {1}", chrome.Type.ToString(), chrome.Version);
+                    var safari = new Safari(agent);
+                    if (safari.Type == BrowserType.Safari)
+                        return string.Format("{0} {1}", safari.Type.ToString(), safari.Version);
                     return string.Empty;
                 }
                 catch (Exception ex)
                 {
-                    //LogHelper.WriteWithTime(ex);
+                    LogHelper.Error(ex.Message);
                 }
                 return string.Empty;
             }
@@ -196,7 +206,7 @@ namespace Learn.Util
                 }
                 catch (Exception ex)
                 {
-                    //LogHelper.WriteWithTime(ex);
+                    LogHelper.Error(ex.Message);
                 }
                 return userAgent;
             }
@@ -275,7 +285,7 @@ namespace Learn.Util
             }
             catch (Exception ex)
             {
-                //LogHelper.WriteWithTime(ex);
+                LogHelper.Error(ex.Message);
             }
             return osVersion;
         }

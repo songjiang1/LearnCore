@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using EFCore.BulkExtensions;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage;
 using System;
@@ -312,6 +313,32 @@ namespace Learn.Bll.EF
             IEnumerable<T> entities = await dbcontext.Set<T>().Where(condition).ToListAsync();
             return entities.Count() > 0 ? await Update(entities) : 0;
         }
+
+        /// <summary>扩展  更新方法  更新指定字段 
+        ///  Update(o => true, new UserInfoEntity() { Name = DateTime.Now.ToString("yyyyMMddHHmmssfff"),  Mobile = "00000"  }, new string[] { "Name" }.ToList());
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="condition"></param>
+        /// <param name="updateValue"></param>
+        /// <param name="updateColumns"></param>
+        /// <returns></returns>
+        public async Task<int> Update<T>(Expression<Func<T, bool>> condition, T updateValue, List<string> updateColumns = null) where T : class, new()
+        {
+            return await dbcontext.Set<T>().Where(condition).BatchUpdateAsync(updateValue, updateColumns);
+        }
+        /// <summary>
+        /// 扩展  更新方法  更新所有字段 
+        /// </summary>    Update(o => true, o => new UserInfoEntity()  { Id = o.Id, Mobile = o.Mobile,  Role = o.Role });
+        /// <typeparam name="T"></typeparam>
+        /// <param name="condition"></param>
+        /// <param name="updateExpression"></param>
+        /// <returns></returns>
+        public async Task<int> Update<T>(Expression<Func<T, bool>> condition, Expression<Func<T, T>> updateExpression) where T : class, new()
+        {
+            return await dbcontext.Set<T>().Where(condition).BatchUpdateAsync(updateExpression);
+        }
+
+
 
         public IQueryable<T> IQueryable<T>(Expression<Func<T, bool>> condition) where T : class, new()
         {

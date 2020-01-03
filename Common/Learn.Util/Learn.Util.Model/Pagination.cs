@@ -7,7 +7,7 @@
     {
         public Pagination()
         {
-            Sort = "Id"; // 默认按Id排序
+            Sort = "id"; // 默认按Id排序
             SortType = " desc ";
         }
 

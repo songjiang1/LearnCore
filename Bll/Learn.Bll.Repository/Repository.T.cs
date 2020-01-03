@@ -64,7 +64,12 @@ namespace Learn.Bll.Repository
         {
             return await db.FindList<T>(condition);
         }
-
+        public async Task<IEnumerable<T>> FindList<T>(Expression<Func<T, bool>> condition, Pagination pagination) where T : class, new()
+        {
+            var data = await db.FindList<T>(condition, pagination.Sort, pagination.SortType.ToLower() == "asc" ? true : false, pagination.PageSize, pagination.PageIndex);
+            pagination.TotalCount = data.total;
+            return data.list;
+        }
         #endregion
 
         #region  更新
@@ -84,6 +89,33 @@ namespace Learn.Bll.Repository
         {
             return await db.Update<T>(condition);
         }
+        /// <summary>扩展  更新方法  更新指定字段 
+        ///  Update(o => true, new UserInfoEntity() { Name = DateTime.Now.ToString("yyyyMMddHHmmssfff"),  Mobile = "00000"  }, new string[] { "Name" }.ToList());
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="condition"></param>
+        /// <param name="updateValue"></param>
+        /// <param name="updateColumns"></param>
+        /// <returns></returns>
+        public async Task<int> Update<T>(Expression<Func<T, bool>> condition, T updateValue, List<string> updateColumns = null) where T : class, new()
+        {
+            return await db.Update(condition,updateValue, updateColumns);
+        }
+        /// <summary>
+        /// 扩展  更新方法  更新所有字段 
+        /// </summary>    Update(o => true, o => new UserInfoEntity()  { Id = o.Id, Mobile = o.Mobile,  Role = o.Role });
+        /// <typeparam name="T"></typeparam>
+        /// <param name="condition"></param>
+        /// <param name="updateExpression"></param>
+        /// <returns></returns>
+        public async Task<int> Update<T>(Expression<Func<T, bool>> condition, Expression<Func<T, T>> updateExpression) where T : class, new()
+        {
+            return await db.Update(condition, updateExpression);
+        }
+
+
+
+
 
         public IQueryable<T> IQueryable<T>(Expression<Func<T, bool>> condition) where T : class, new()
         {
@@ -126,6 +158,17 @@ namespace Learn.Bll.Repository
         }
         #endregion
 
+        #region MyRegion 插入
+        public async Task<int> Insert<T>(T entity) where T : class
+        {
+            return await db.Insert<T>(entity);
+        }
+        public async Task<int> Insert<T>(List<T> entity) where T : class
+        {
+            return await db.Insert<T>(entity);
+        }
+
+        #endregion
 
     }
 }

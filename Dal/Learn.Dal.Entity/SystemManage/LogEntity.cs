@@ -114,7 +114,10 @@ namespace Learn.Dal.Entity.BaseManage
         /// </summary>
         public string browser { get ; set ; }
 
-       
+        /// <summary>
+        /// 操作系统
+        /// </summary>
+        public string operating_system { get; set; }
         /// <summary>
         /// 执行结果状态
         /// </summary>
@@ -136,12 +139,13 @@ namespace Learn.Dal.Entity.BaseManage
         /// <summary>
         /// 删除标记
         /// </summary>
-        public Boolean? is_delete { get ; set ; }
+        public Boolean is_delete { get ; set ; }
 
        
         /// <summary>
         /// 有效标志
         /// </summary>
-        public Boolean? is_enabled { get ; set ; }
+        public Boolean is_enabled { get ; set ; }
+        
     }
 }

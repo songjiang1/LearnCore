@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Web;
 using Microsoft.Extensions.DependencyInjection;
+using Learn.Cache.Factory;
 
 namespace Learn.Web.Code
 {
@@ -36,7 +37,7 @@ namespace Learn.Web.Code
                     OperatorInfo user = await new DataRepository().GetUserByToken(token);
                     if (user != null)
                     {
-                        //CacheFactory.Cache().AddCache(token, user);
+                        CacheFactory.Cache().AddCache(token, user);
                     }
                     break;
 
@@ -62,7 +63,7 @@ namespace Learn.Web.Code
                     break;
 
                 case "WebApi":
-                    //CacheFactory.Cache().RemoveCache(apiToken);
+                    CacheFactory.Cache().RemoveCache(apiToken);
                     break;
 
                 default:
@@ -105,14 +106,13 @@ namespace Learn.Web.Code
                 return user;
             }
             token = token.Trim('"');
-            //user = CacheFactory.Cache().GetCache<OperatorInfo>(token);
-            user = null;
+            user = CacheFactory.Cache().GetCache<OperatorInfo>(token); 
             if (user == null)
             {
                 user = await new DataRepository().GetUserByToken(token);
                 if (user != null)
                 {
-                    //CacheFactory.Cache().AddCache(token, user);
+                    CacheFactory.Cache().AddCache(token, user);
                 }
             }
             return user; 

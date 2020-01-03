@@ -13,6 +13,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Bll\Learn.Bll.Repository\Learn.Bll.Repository.csproj" />
+    <ProjectReference Include="..\..\Common\Cache\Learn.Cache.Factory\Learn.Cache.Factory.csproj" />
     <ProjectReference Include="..\..\Common\Learn.Util\Learn.Util\Learn.Util.csproj" />
   </ItemGroup>
 

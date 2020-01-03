@@ -37,6 +37,23 @@ namespace Learn.Bll
         Task<int> Update<T>(IEnumerable<T> entities) where T : class;
         Task<int> UpdateAllField<T>(T entity) where T : class;
         Task<int> Update<T>(Expression<Func<T, bool>> condition) where T : class, new();
+        /// <summary> 
+        /// 扩展  更新方法  更新所有字段 
+        /// </summary>    Update(o => true, o => new UserInfoEntity()  { Id = o.Id, Mobile = o.Mobile,  Role = o.Role });
+        /// <typeparam name="T"></typeparam>
+        /// <param name="condition"></param>
+        /// <param name="updateExpression"></param>
+        /// <returns></returns>  
+        Task<int> Update<T>(Expression<Func<T, bool>> condition, Expression<Func<T, T>> updateExpression) where T : class, new();
+        /// <summary>扩展  更新方法  更新指定字段 
+        ///  Update(o => true, new UserInfoEntity() { Name = DateTime.Now.ToString("yyyyMMddHHmmssfff"),  Mobile = "00000"  }, new string[] { "Name" }.ToList());
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="condition"></param>
+        /// <param name="updateValue"></param>
+        /// <param name="updateColumns"></param>
+        /// <returns></returns>
+        Task<int> Update<T>(Expression<Func<T, bool>> condition,T updateValue, List<string> updateColumns = null) where T : class, new();
 
         IQueryable<T> IQueryable<T>(Expression<Func<T, bool>> condition) where T : class, new();
 
