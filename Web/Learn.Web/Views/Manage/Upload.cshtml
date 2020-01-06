@@ -1,0 +1,54 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html> 
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>文件上传</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <link rel="stylesheet" href="@Url.Content("~/lib/layui2.5.5/layui/css/layui.css")" media="all"> 
+</head>
+<body>
+    <div class="layadmin-user-login layadmin-user-display-show" > 
+        <div class="layadmin-user-login-main">
+            <input id="upload_file" type="button" hidden class="layui-btn layui-btn-sm layui-btn-normal UploadFile" lay-data="{url: '/Manage/UploadFile',accept: 'file'}" value="选择" title="重复上传会覆盖已有文件" /> 
+        </div>  
+    </div>
+
+
+    <script src="@Url.Content("~/lib/jquery/dist/jquery.js")"></script>
+    <script src="@Url.Content("~/lib/layui2.5.5/layui/layui.js")"></script>  
+    <script>
+        layui.config({
+            base: '~/lib/layui2.5.5/layui/lay/modules/' //静态资源所在路径
+        }).use(['form','upload'], function () {
+            var $ = layui.$, form = layui.form, upload = layui.upload;
+            upload.render({
+                elem: '.UploadFile' //绑定元素
+                ,multiple:true
+               , before: function (obj) {
+                   layer.load(2); //上传loading
+               }
+               , done: function (res, index, upload) {
+                   //上传完毕回调
+                    debugger;
+                   if (res.code ==200) { 
+                       //$('#FileName').val(res.name);
+                       //$("#FileUrl").val(res.src);
+                       //获取当前触发上传的元素
+                       var items = this.item;
+                       items.hide();
+                      }
+				}
+            }); 
+
+          
+        });
+    </script>
+</body>
+</html>
