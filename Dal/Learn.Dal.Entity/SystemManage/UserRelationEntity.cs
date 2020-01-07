@@ -8,15 +8,9 @@ namespace Learn.Dal.Entity.BaseManage
     /// <summary>
     /// 
     /// </summary>
-    public class UserRelationEntity
+    public class UserRelationEntity:BaseEntity
     {
-        [Key]
-        /// <summary>
-        /// 用户关系主键
-        /// </summary>
-        public string  id { get ; set  ; }
-
-       
+         
         /// <summary>
         /// 用户主键
         /// </summary>
@@ -38,30 +32,13 @@ namespace Learn.Dal.Entity.BaseManage
         /// <summary>
         /// 默认对象
         /// </summary>
-        public Boolean? is_default { get ; set ; }
+        public Boolean is_default { get ; set ; }
 
        
         /// <summary>
         /// 排序码
         /// </summary>
-        public int? sort_code { get ; set ; }
-
-       
-        /// <summary>
-        /// 
-        /// </summary>
-        public DateTime? create_date { get ; set ; }
-
-       
-        /// <summary>
-        /// 
-        /// </summary>
-        public string create_user_id { get ; set ; }
-
-       
-        /// <summary>
-        /// 
-        /// </summary>
-        public string create_user_name { get ; set ; }
+        public int sort_code { get ; set ; } 
+        
     }
 }

@@ -93,8 +93,11 @@ namespace Learn.Util.Enum
         [Description("成功")]
         Success = 200,
 
-        [Description("接口错误")]
-        Error = 404
+        [Description("系统错误")]
+        Error = 404,
+
+        [Description("请求错误")]
+        Fail = 0
 
     }
 

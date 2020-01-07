@@ -146,11 +146,7 @@ namespace Learn.Bll.Repository
         }
         #endregion
 
-        #region 对象实体 查询
-        public async Task<T> FindEntity<T>(long id) where T : class
-        {
-            return await db.FindEntity<T>(id);
-        }
+        #region 对象实体 查询 
         public async Task<T> FindEntity<T>(string id) where T : class
         {
             return await db.FindEntity<T>(id);

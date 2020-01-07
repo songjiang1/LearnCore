@@ -15,7 +15,7 @@ namespace Learn.Bll.Repository
     /// 日 期：2018.10.18
     /// 描 述：定义仓储模型中的数据标准操作接口
     /// </summary>
-    public class Repository<T> 
+    public class Repository<T> : IRepository<T> where T : class, new()
     {
         #region 构造
         public IDatabase db;
@@ -25,7 +25,28 @@ namespace Learn.Bll.Repository
         }
         #endregion
 
-         
+
+        #region 事务提交
+        public IRepository<T> BeginTrans()
+        {
+            db.BeginTrans();
+            return this;
+        }
+        public async Task<int> Commit()
+        {
+            return await db.Commit();
+        }
+        public void Rollback()
+        {
+            db.Rollback();
+        }
+        public void Close()
+        {
+            db.Close();
+        }
+        #endregion
+
+
 
         #region 执行 SQL 语句
         public async Task<int> ExecuteBySql(string strSql)
@@ -47,9 +68,9 @@ namespace Learn.Bll.Repository
         #endregion
 
         #region 查询 
-        public async Task<T> FindEntity<T>(object keyValue) where T : class
+        public async Task<T> FindEntity<T>(string id) where T : class
         {
-            return await db.FindEntity<T>(keyValue);
+            return await db.FindEntity<T>(id);
         }
         public async Task<T> FindEntity<T>(Expression<Func<T, bool>> condition) where T : class, new()
         {
@@ -60,15 +81,59 @@ namespace Learn.Bll.Repository
         {
             return await db.FindList<T>();
         }
+        public async Task<IEnumerable<T>> FindList<T>(Func<T, object> orderby) where T : class, new()
+        {
+            return await db.FindList<T>(orderby);
+        }
         public async Task<IEnumerable<T>> FindList<T>(Expression<Func<T, bool>> condition) where T : class, new()
         {
             return await db.FindList<T>(condition);
         }
-        public async Task<IEnumerable<T>> FindList<T>(Expression<Func<T, bool>> condition, Pagination pagination) where T : class, new()
+        public async Task<IEnumerable<T>> FindList<T>(string strSql) where T : class
         {
-            var data = await db.FindList<T>(condition, pagination.Sort, pagination.SortType.ToLower() == "asc" ? true : false, pagination.PageSize, pagination.PageIndex);
+            return await db.FindList<T>(strSql);
+        }
+        public async Task<IEnumerable<T>> FindList<T>(string strSql, DbParameter[] dbParameter) where T : class
+        {
+            return await db.FindList<T>(strSql, dbParameter);
+        } 
+        
+        #endregion
+
+
+        #region 数据源 查询
+        public async Task<DataTable> FindTable(string strSql)
+        {
+            return await db.FindTable(strSql);
+        }
+        public async Task<DataTable> FindTable(string strSql, DbParameter[] dbParameter)
+        {
+            return await db.FindTable(strSql, dbParameter);
+        }
+        public async Task<DataTable> FindTable(string strSql, Pagination pagination)
+        {
+            var data = await db.FindTable(strSql, pagination.Sort, pagination.SortType.ToLower() == "asc" ? true : false, pagination.PageSize, pagination.PageIndex);
             pagination.TotalCount = data.total;
-            return data.list;
+            return data.Item2;
+        }
+        public async Task<DataTable> FindTable(string strSql, DbParameter[] dbParameter, Pagination pagination)
+        {
+            var data = await db.FindTable(strSql, dbParameter, pagination.Sort, pagination.SortType.ToLower() == "asc" ? true : false, pagination.PageSize, pagination.PageIndex);
+            pagination.TotalCount = data.total;
+            return data.Item2;
+        }
+
+        public async Task<object> FindObject(string strSql)
+        {
+            return await db.FindObject(strSql);
+        }
+        public async Task<object> FindObject(string strSql, DbParameter[] dbParameter)
+        {
+            return await db.FindObject(strSql, dbParameter);
+        }
+        public async Task<T> FindObject<T>(string strSql) where T : class
+        {
+            return await db.FindObject<T>(strSql);
         }
         #endregion
 
@@ -145,6 +210,10 @@ namespace Learn.Bll.Repository
             return await db.Delete<T>(id);
         }
         public async Task<int> Delete<T>(long[] id) where T : class
+        {
+            return await db.Delete<T>(id);
+        }
+        public async Task<int> Delete<T>(string[] id) where T : class
         {
             return await db.Delete<T>(id);
         }

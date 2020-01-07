@@ -6,6 +6,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Common\Learn.Util\Learn.Util.Enum\Learn.Util.Enum.csproj" />
+    <ProjectReference Include="..\..\Web\Learn.Web.Code\Learn.Web.Code.csproj" />
   </ItemGroup>
 
   <ItemGroup>

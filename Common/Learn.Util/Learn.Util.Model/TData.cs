@@ -17,6 +17,11 @@ namespace Learn.Util.Model
         /// </summary>
         public string Msg { get; set; }
 
+
+        /// <summary>
+        /// 获取 返回数据
+        /// </summary>
+        public object Data { get; set; }
         /// <summary>
         /// 扩展Message
         /// </summary>

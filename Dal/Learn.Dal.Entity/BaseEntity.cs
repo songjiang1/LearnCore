@@ -1,5 +1,7 @@
 ﻿
+using Learn.Web.Code;
 using System;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Learn.Dal.Entity
@@ -9,13 +11,26 @@ namespace Learn.Dal.Entity
     /// </summary>
     public class BaseEntity
     {
+
         /// <summary>
-        /// 新增调用
+        /// token
         /// </summary>
         [NotMapped]
-        public string Token { get; set; }
-
+        public string token { get; set; }
+        [Key]
         public string id { get; set; }
+
+        /// <summary>
+        /// 删除标记
+        /// </summary>
+        public Boolean is_delete { get; set; }
+
+
+        /// <summary>
+        /// 有效标志
+        /// </summary>
+        public Boolean is_enabled { get; set; }
+
         /// <summary>
         /// 创建日期
         /// </summary>
@@ -51,30 +66,35 @@ namespace Learn.Dal.Entity
         /// </summary>
         public string modify_user_name { get; set; }
 
-        public virtual void Create()
+        public  async virtual void Create()
         {
             this.id = Guid.NewGuid().ToString(); 
             this.create_date = DateTime.Now;
-            //this.create_user_id = OperatorProvider.Provider.Current().UserId;
-            //this.create_user_name = OperatorProvider.Provider.Current().UserName;
+            this.is_delete = false;
+            this.is_enabled = true;
+            OperatorInfo user = await Operator.Instance.Current(token);
+            if (user != null)
+            {
+                this.create_user_id = user.UserId;
+                this.create_user_name = user.Account;
+            } 
         }
-        /// <summary>
-        /// 新增调用
-        /// </summary>
-        public virtual void CreateApp()
-        {
-        }
+        
         /// <summary>
         /// 编辑调用
         /// </summary>
-        /// <param name="keyValue">主键值</param>
-        public virtual void Modify(string keyValue)
+        /// <param name="keyValue">主键值</param> 
+        public async virtual void Modify(string keyValue)
         {
             this.id = keyValue;
             this.modify_date = DateTime.Now;
-            //this.modify_user_id = OperatorProvider.Provider.Current().UserId;
-            //this.modify_user_name = OperatorProvider.Provider.Current().UserName;
+            OperatorInfo user = await Operator.Instance.Current(token);
+            if (user != null)
+            {
+                this.modify_user_id = user.UserId;
+                this.modify_user_name = user.Account;
+            }
         }
-        
+
     }
 }

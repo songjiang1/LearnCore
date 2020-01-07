@@ -10,12 +10,7 @@ namespace Learn.Dal.Entity.BaseManage
     /// </summary>
     public class RroleEntity
     {
-        [Key]
-        /// <summary>
-        /// 角色主键
-        /// </summary>
-        public string  id { get ; set  ; }
-
+        
        
         /// <summary>
         /// 机构主键
@@ -44,7 +39,7 @@ namespace Learn.Dal.Entity.BaseManage
         /// <summary>
         /// 公共角色
         /// </summary>
-        public Boolean? is_public { get ; set ; }
+        public Boolean is_public { get ; set ; }
 
        
         /// <summary>
@@ -56,60 +51,12 @@ namespace Learn.Dal.Entity.BaseManage
         /// <summary>
         /// 排序码
         /// </summary>
-        public int? sort_code { get ; set ; }
-
-       
-        /// <summary>
-        /// 删除标记
-        /// </summary>
-        public Boolean? is_delete { get ; set ; }
-
-       
-        /// <summary>
-        /// 有效标志
-        /// </summary>
-        public Boolean? is_enabled { get ; set ; }
-
-       
+        public int? sort_code { get ; set ; }  
         /// <summary>
         /// 备注
         /// </summary>
         public string description { get ; set ; }
 
-       
-        /// <summary>
-        /// 
-        /// </summary>
-        public DateTime? create_date { get ; set ; }
-
-       
-        /// <summary>
-        /// 
-        /// </summary>
-        public string create_user_id { get ; set ; }
-
-       
-        /// <summary>
-        /// 
-        /// </summary>
-        public string create_user_name { get ; set ; }
-
-       
-        /// <summary>
-        /// 
-        /// </summary>
-        public DateTime? modify_date { get ; set ; }
-
-       
-        /// <summary>
-        /// 
-        /// </summary>
-        public string modify_user_id { get ; set ; }
-
-       
-        /// <summary>
-        /// 
-        /// </summary>
-        public string modify_user_name { get ; set ; }
+        
     }
 }

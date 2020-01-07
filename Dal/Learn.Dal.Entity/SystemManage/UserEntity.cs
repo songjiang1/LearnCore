@@ -13,12 +13,7 @@ namespace Learn.Dal.Entity.BaseManage
     [Table("sys_user")]
     public class UserEntity: BaseEntity
     {
-        [Key]
-        /// <summary>
-        /// 用户主键
-        /// </summary>
-        public string id { get; set; }
-
+        
 
         /// <summary>
         /// 用户编码
@@ -281,20 +276,7 @@ namespace Learn.Dal.Entity.BaseManage
         /// <summary>
         /// 排序码
         /// </summary>
-        public int? sort_code { get; set; }
-
-
-        /// <summary>
-        /// 删除标记
-        /// </summary>
-        public Boolean  is_delete { get; set; }
-
-
-        /// <summary>
-        /// 有效标志
-        /// </summary>
-        public Boolean  is_enabled { get; set; }
-
+        public int? sort_code { get; set; } 
 
         /// <summary>
         /// 备注

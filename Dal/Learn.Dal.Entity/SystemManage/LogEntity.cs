@@ -10,7 +10,7 @@ namespace Learn.Dal.Entity.BaseManage
     /// </summary>
     /// 
     [Table("sys_log")]
-    public class LogEntity
+    public class LogEntity: BaseEntity
     {
         //通过Attribute配置约束
         //[Key]//主键约束 public int PrimaryKey{ get; set; }
@@ -24,13 +24,8 @@ namespace Learn.Dal.Entity.BaseManage
         //[Table("Class")]//表名约束public class ClassInfo {  }
         //[Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]//列值GUID化public GUID Id{ get; set; } 
 
-        [Key]
-        /// <summary>
-        /// 日志主键
-        /// </summary>
-        public string id { get ; set  ; }
-
        
+             
         /// <summary>
         /// 分类Id 1-登陆2-访问3-操作4-异常
         /// </summary>
@@ -133,19 +128,7 @@ namespace Learn.Dal.Entity.BaseManage
         /// <summary>
         /// 备注
         /// </summary>
-        public string description { get ; set ; }
-
-       
-        /// <summary>
-        /// 删除标记
-        /// </summary>
-        public Boolean is_delete { get ; set ; }
-
-       
-        /// <summary>
-        /// 有效标志
-        /// </summary>
-        public Boolean is_enabled { get ; set ; }
+        public string description { get ; set ; } 
         
     }
 }

@@ -12,6 +12,7 @@ using Learn.Util.Extension;
 using Learn.Util;
 using Learn.Util.Model;
 using Learn.Web.Code;
+using Learn.Util.Enum; 
 
 namespace Learn.Web.Controllers
 {
@@ -184,6 +185,58 @@ namespace Learn.Web.Controllers
             }
         }
         #endregion
+       
+        /// <summary>
+        /// 返回成功消息
+        /// </summary>
+        /// <param name="message">消息</param>
+        /// <returns></returns>
+        protected virtual ActionResult Success(string message)
+        {
+            TData obj = new TData();
+            obj.Tag = RequestTypeEnum.Success;
+            obj.Msg = message;
+            return Json(obj); 
+        }
+        /// <summary>
+        /// 返回成功消息
+        /// </summary>
+        /// <param name="message">消息</param>
+        /// <param name="data">数据</param>
+        /// <returns></returns>
+        protected virtual ActionResult Success(string message, object data)
+        {
+
+            TData obj = new TData();
+            obj.Tag = RequestTypeEnum.Success;
+            obj.Msg = message;
+            obj.Data = data;
+            return Json(obj); 
+        }
+        /// <summary>
+        /// Error
+        /// </summary>
+        /// <param name="message">消息</param>
+        /// <returns></returns>
+        protected virtual ActionResult Error(string message)
+        {
+            TData obj = new TData();
+            obj.Tag = RequestTypeEnum.Error;
+            obj.Msg = message; 
+            return Json(obj);
+        }
+        /// <summary>
+        /// Error
+        /// </summary>
+        /// <param name="message">消息</param>
+        /// <returns></returns>
+        protected virtual ActionResult Fail(string message)
+        {
+            TData obj = new TData();
+            obj.Tag = RequestTypeEnum.Fail;
+            obj.Msg = message;
+            return Json(obj);
+        }
     }
 
     public class CustomJsonResult : JsonResult
@@ -205,11 +258,9 @@ namespace Learn.Web.Controllers
 
         public override Task ExecuteResultAsync(ActionContext context)
         {
-            this.ContentType = "text/json;charset=utf-8;";
-
+            this.ContentType = "text/json;charset=utf-8;"; 
             JsonSerializerSettings jsonSerizlizerSetting = new JsonSerializerSettings();
-            jsonSerizlizerSetting.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
-
+            jsonSerizlizerSetting.ReferenceLoopHandling = ReferenceLoopHandling.Ignore; 
             string json = JsonConvert.SerializeObject(Value, Formatting.None, jsonSerizlizerSetting);
             Value = json.ToJObject();
             return base.ExecuteResultAsync(context);
