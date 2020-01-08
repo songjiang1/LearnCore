@@ -11,7 +11,7 @@ using System.Text;
 using System.Threading.Tasks; 
 namespace Learn.Dal.Busines.SystemManage
 {
-    public class UserBLL
+    public class UserBLL 
     {
         private UserService userService = new UserService(); 
 
@@ -102,11 +102,18 @@ namespace Learn.Dal.Busines.SystemManage
         #endregion
 
         #region 提交数据
-       
+        public async Task<TData> UpdateUser(UserEntity entity)
+        {
+            TData obj = new TData();
+            await userService.UpdateUser(entity);
+
+            obj.Tag = RequestTypeEnum.Success;
+            return obj;
+        }
         #endregion
 
         #region 私有方法
-         
+
         #endregion
     }
 }

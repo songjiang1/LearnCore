@@ -6,13 +6,15 @@ using Microsoft.AspNetCore.Mvc;
 using Learn.Dal.Entity.BaseManage;
 using System;
 using System.Threading.Tasks;
+using Learn.Web.Code;
 
 namespace Learn.Web.Controllers
 {
     public class HomeController : BaseController
     {
 
-        private UserBLL uerBLL = new UserBLL();
+        private UserBLL userBLL = new UserBLL();
+        private LogBLL  logBLL = new LogBLL();
         #region MyRegion 视图
         public IActionResult Index()
         {
@@ -32,6 +34,16 @@ namespace Learn.Web.Controllers
         [HttpPost]
         public async Task<IActionResult> Login(string userName, string password)
         {
+            LogEntity logEntity = new LogEntity
+            {
+                category_id = OperationTypeEnum.Login,
+                operate_type_id = ((int)OperationTypeEnum.Login).ToString(),
+                operate_type = EnumHelper.GetDescription(OperationTypeEnum.Login),
+                operate_account = userName,
+                operate_user_id = "",
+                operate_time = DateTime.Now,
+                module = GlobalContext.Configuration.GetSection("SystemConfig:SoftName").Value
+            };
             try
             {
                 TData obj = new TData();
@@ -45,45 +57,30 @@ namespace Learn.Web.Controllers
                 //    obj.Message = "验证码错误，请重新输入";
                 //    return Json(obj);
                 //}
-                TData<UserEntity> userObj = await uerBLL.CheckLogin(userName, password, (int)PlatformEnum.Web);
+                TData<UserEntity> userObj = await userBLL.CheckLogin(userName, password, (int)PlatformEnum.Web);
                 if (userObj.Tag == RequestTypeEnum.Success)
                 {
-                    //await new UserBLL().UpdateUser(userObj.Result);
-                    //await Operator.Instance.AddCurrent(userObj.Result.web_token);
+                    await new UserBLL().UpdateUser(userObj.Result);
+                    await Operator.Instance.AddCurrent(userObj.Result.web_token);
                 }
+                Action taskAction = async () =>
+                { 
+                    logEntity.execute_result = RequestTypeEnum.Success;
+                    logEntity.execute_resultJson = "登录成功";
 
-                string ip = NetHelper.Ip;
-                string browser = NetHelper.Browser;
-                string os = NetHelper.GetOSVersion();
-                string userAgent = NetHelper.UserAgent;
-
-                //Action taskAction = async () =>
-                //{
-                //    //LogLoginEntity logLoginEntity = new LogLoginEntity
-                //    //{
-                //    //    LogStatus = userObj.Tag == 1 ? OperateStatusEnum.Success.ParseToInt() : OperateStatusEnum.Fail.ParseToInt(),
-                //    //    Remark = userObj.Message,
-                //    //    IpAddress = ip,
-                //    //    IpLocation = IpLocationHelper.GetIpLocation(ip),
-                //    //    Browser = browser,
-                //    //    OS = os,
-                //    //    ExtraRemark = userAgent,
-                //    //    BaseCreatorId = userObj.Result?.Id
-                //    //};
-
-                //    // 让底层不用获取HttpContext
-                //    //logLoginEntity.BaseCreatorId = logLoginEntity.BaseCreatorId ?? 0;
-
-                //    //await new LogLoginBLL().SaveForm(logLoginEntity);
-                //};
-                //AsyncTaskHelper.StartTask(taskAction);
-
+                    // 让底层不用获取HttpContext  
+                    await  logBLL.WriteLog(logEntity);
+                }; 
+                AsyncTaskHelper.StartTask(taskAction); 
                 obj.Tag = userObj.Tag;
                 obj.Msg = userObj.Msg;
                 return Json(obj);
             }
             catch (Exception ex)
             {
+                logEntity.execute_result = RequestTypeEnum.Fail;
+                logEntity.execute_resultJson = ex.Message;
+                await logBLL.WriteLog(logEntity);
                 TData obj = new TData();
                 obj.Tag = RequestTypeEnum.Error;
                 obj.Msg = "用户不存在";

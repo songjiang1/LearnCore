@@ -8,7 +8,7 @@ namespace Learn.Util.Model
     public class TData
     {
         /// <summary>
-        /// 操作结果，Tag为1代表成功，0代表失败，其他的验证返回结果，可根据需要设置
+        /// 操作结果，Tag为200代表成功，0代表失败，其他的验证返回结果，可根据需要设置
         /// </summary>
         public RequestTypeEnum Tag { get; set; }
 

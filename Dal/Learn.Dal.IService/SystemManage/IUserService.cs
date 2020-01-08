@@ -11,6 +11,8 @@ namespace Learn.Dal.IService
     public interface IUserService :IBaseServices<UserEntity>
 	{ 
 		Task<UserEntity> CheckLogin(string userName);
+		Task<UserEntity> UpdateUser(UserEntity   userEntity);
+		
 	}
 }
 

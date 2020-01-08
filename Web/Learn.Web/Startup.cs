@@ -15,6 +15,13 @@ using System.Text.Unicode;
 using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.HttpOverrides;
 using Learn.Web.Controllers;
+using UEditor.Core;
+using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json.Serialization;
+using Microsoft.AspNetCore.Mvc;
+using Autofac;
+using Autofac.Extensions.DependencyInjection;
+using System;
 
 namespace Learn.Web
 {
@@ -22,25 +29,47 @@ namespace Learn.Web
     {
         public IConfiguration Configuration { get; }
         public IConfigurationRoot ConfigurationRoot { get; }
+
+        public IHostingEnvironment Env { get; }
         public Startup(IConfiguration configuration, IHostingEnvironment env)
         {
-            Configuration = configuration;
+            this.Configuration = configuration;
+            this.Env = env;
             LogHelper.Configure(); //使用前先配置
             GlobalContext.LogWhenStart(env); 
-            GlobalContext.HostingEnvironment = env;
-
+            GlobalContext.HostingEnvironment = env; 
             var builder = new ConfigurationBuilder().SetBasePath(env.ContentRootPath)
                                                     .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
                                                     .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true)
                                                     .AddEnvironmentVariables();
           ConfigurationRoot = builder.Build();
-        } 
+        }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
+        // This method gets called by the runtime. Use this method to add services to the container. 
+        //IServiceProvider
         public void ConfigureServices(IServiceCollection services)
-        { 
-            services.AddCors(option => option.AddPolicy("AllowSpecificOrigins", policy => policy.AllowAnyHeader().AllowAnyMethod().AllowCredentials().WithOrigins(new[] { "http://localhost"})));
-
+        {
+            //将Redis分布式缓存服务添加到服务中
+            //services.AddDistributedRedisCache(options =>
+            //{
+            //    //用于连接Redis的配置  Configuration.GetConnectionString("RedisConnectionString")读取配置信息的串
+            //    options.Configuration = "localhost";// Configuration.GetConnectionString("RedisConnectionString");
+            //    //Redis实例名RedisDistributedCache
+            //    options.InstanceName = "RedisDistributedCache";
+            //});
+            services.AddCors(c =>
+            {  
+                //一般采用这种方法
+                c.AddPolicy("AllowSpecificOrigins", policy =>
+                {
+                    // 支持多个域名端口，注意端口号后不要带/斜杆：比如localhost:8000/，是错的
+                    // 注意，http://127.0.0.1:1818 和 http://localhost:1818 是不一样的，尽量写两个
+                    policy
+                    .WithOrigins("http://127.0.0.1", "http://localhost")
+                    .AllowAnyHeader()//Ensures that the policy allows any header.
+                    .AllowAnyMethod();
+                });
+            });
             services.Configure<CookiePolicyOptions>(options =>
             {
                 // This lambda determines whether user consent for non-essential cookies is needed for a given request.
@@ -48,18 +77,19 @@ namespace Learn.Web
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
             services.AddSingleton(HtmlEncoder.Create(UnicodeRanges.All));
-            //将Redis分布式缓存服务添加到服务中
-            services.AddDistributedRedisCache(options =>
-            {
-                //用于连接Redis的配置  Configuration.GetConnectionString("RedisConnectionString")读取配置信息的串
-                options.Configuration = "localhost";// Configuration.GetConnectionString("RedisConnectionString");
-                //Redis实例名RedisDistributedCache
-                options.InstanceName = "RedisDistributedCache";
-            });
+           
+            services.AddUEditorService();
             services.AddMvc(options =>
             {
                 options.Filters.Add<GlobalExceptionFilter>();
+            }).SetCompatibilityVersion(CompatibilityVersion.Version_3_0)
+            // 取消默认驼峰 System.Text.Json方式
+            .AddJsonOptions(options => { 
+                options.JsonSerializerOptions.Encoder = JavaScriptEncoder.Create(UnicodeRanges.All);
+                options.JsonSerializerOptions.PropertyNamingPolicy = null;
             });
+            //NewtonsoftJson 方式 
+            //AddNewtonsoftJson(options =>   options.SerializerSettings.ContractResolver = new DefaultContractResolver());
 
             services.AddSession();
             services.AddHttpContextAccessor();
@@ -69,6 +99,16 @@ namespace Learn.Web
             GlobalContext.Services = services;
             GlobalContext.ServiceProvider = services.BuildServiceProvider();
             GlobalContext.Configuration = Configuration;
+
+
+            var builder = new ContainerBuilder();
+            services.AddSingleton(new Appsettings(Env));
+
+            ////将services填充到Autofac容器生成器中
+            //builder.Populate(services); 
+            ////使用已进行的组件登记创建新容器
+            //var ApplicationContainer = builder.Build();   
+            //return new AutofacServiceProvider(ApplicationContainer);//第三方IOC接管 core内置DI容器
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -91,8 +131,10 @@ namespace Learn.Web
 
             #region 实现跨域 
             app.UseCors("AllowSpecificOrigins");
+            #endregion
+            // 跳转https
+            //app.UseHttpsRedirection();
             app.UseSession();
-            #endregion 
             app.UseRouting();
             string resource = Path.Combine(env.ContentRootPath, "Resource");
             if (!Directory.Exists(resource))
@@ -106,15 +148,15 @@ namespace Learn.Web
             app.UseStaticFiles();
             //自定义静态文件夹 并过滤文件
             var provider = new FileExtensionContentTypeProvider();
-            provider.Mappings.Remove("gif");
+            //provider.Mappings.Remove("gif");
             app.UseStaticFiles(new StaticFileOptions()
             {
                 FileProvider = new PhysicalFileProvider(
-                Path.Combine(Directory.GetCurrentDirectory(), @"StaticFiles")),
-                RequestPath = new PathString("/StaticFiles"),
+                Path.Combine(Directory.GetCurrentDirectory(), @"upload")),
+                RequestPath = new PathString("/upload"),
                 OnPrepareResponse = ctx =>
                 {
-                    ctx.Context.Response.Headers.Append("Cache-Control", "public,max-age=600");
+                    ctx.Context.Response.Headers.Append("Cache-Control", "public,max-age=36000");
                 },
                 ContentTypeProvider = provider
             }); ;

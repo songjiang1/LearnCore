@@ -6,15 +6,18 @@ using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
+using UEditor.Core;
 
 namespace Learn.Web.Controllers
 {
     public class ManageController : Controller 
     {
         private IHostingEnvironment hostingEnv;
-        public ManageController(IHostingEnvironment env)
-        {
+        private readonly UEditorService _ueditorService;
+        public ManageController(IHostingEnvironment env, UEditorService ueditorService)
+        { 
             this.hostingEnv = env;
+            this._ueditorService = ueditorService;
         }
         public IActionResult Index()
         {
@@ -24,6 +27,17 @@ namespace Learn.Web.Controllers
         {
             return View();
         }
+        public IActionResult Ueditor()
+        {
+            return View();
+        }
+        [HttpGet, HttpPost]
+        public ContentResult UEUpload()
+        {
+            var response = _ueditorService.UploadAndGetResponse(HttpContext);
+            return Content(response.Result, response.ContentType);
+        }
+
         [HttpPost]
         public IActionResult UploadFile()
         {
@@ -42,13 +56,14 @@ namespace Learn.Web.Controllers
                     var extname = filename.Substring(filename.LastIndexOf("."), filename.Length - filename.LastIndexOf("."));
                     var filename1 = System.Guid.NewGuid().ToString()+ extname;
                     tempname = filename1;
-                    var path = hostingEnv.WebRootPath;
+                    //var path = hostingEnv.WebRootPath;
+                    var path = hostingEnv.ContentRootPath;
                     string dir = DateTime.Now.ToString("yyyyMMdd");
-                    if (!System.IO.Directory.Exists(hostingEnv.WebRootPath + $@"\Upload\UploadFile\{dir}"))
+                    if (!System.IO.Directory.Exists(path + $@"\Upload\UploadFile\{dir}"))
                     {
-                        System.IO.Directory.CreateDirectory(hostingEnv.WebRootPath + $@"\Upload\UploadFile\{dir}");
+                        System.IO.Directory.CreateDirectory(path + $@"\Upload\UploadFile\{dir}");
                     }
-                    filename = hostingEnv.WebRootPath + $@"\Upload\UploadFile\{dir}\{filename1}";
+                    filename = path + $@"\Upload\UploadFile\{dir}\{filename1}";
                     size += file.Length;
                     using (FileStream fs = System.IO.File.Create(filename))
                     {

@@ -62,7 +62,7 @@ namespace Learn.Bll
 
         Task<IEnumerable<T>> FindList<T>() where T : class, new();
         Task<IEnumerable<T>> FindList<T>(Func<T, object> orderby) where T : class, new();
-        Task<IEnumerable<T>> FindList<T>(Expression<Func<T, bool>> condition) where T : class, new();
+        Task<IEnumerable<T>> FindList<T>(Expression<Func<T, bool>> condition) where T : class, new(); 
         Task<IEnumerable<T>> FindList<T>(string strSql) where T : class;
         Task<IEnumerable<T>> FindList<T>(string strSql, DbParameter[] dbParameter) where T : class;
         Task<(int total, IEnumerable<T> list)> FindList<T>(string orderField, bool isAsc, int pageSize, int pageIndex) where T : class, new();

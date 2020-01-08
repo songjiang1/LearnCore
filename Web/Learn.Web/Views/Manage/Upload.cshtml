@@ -3,7 +3,7 @@
     Layout = null;
 }
 
-<!DOCTYPE html> 
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8">
@@ -11,43 +11,82 @@
     <meta name="renderer" content="webkit">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
-    <link rel="stylesheet" href="@Url.Content("~/lib/layui2.5.5/layui/css/layui.css")" media="all"> 
+    <link rel="stylesheet" href="@Url.Content("~/lib/layui2.5.5/layui/css/layui.css")" media="all">
 </head>
 <body>
-    <div class="layadmin-user-login layadmin-user-display-show" > 
+    <div class="layadmin-user-login layadmin-user-display-show">
         <div class="layadmin-user-login-main">
-            <input id="upload_file" type="button" hidden class="layui-btn layui-btn-sm layui-btn-normal UploadFile" lay-data="{url: '/Manage/UploadFile',accept: 'file'}" value="选择" title="重复上传会覆盖已有文件" /> 
-        </div>  
+            <input id="upload_file" type="button" hidden class="layui-btn layui-btn-sm layui-btn-normal UploadFile" lay-data="{url: '/Manage/UploadFile',accept: 'file'}" value="选择" title="重复上传会覆盖已有文件" />
+        </div>
     </div>
 
 
     <script src="@Url.Content("~/lib/jquery/dist/jquery.js")"></script>
-    <script src="@Url.Content("~/lib/layui2.5.5/layui/layui.js")"></script>  
+    <script src="@Url.Content("~/lib/layui2.5.5/layui/layui.js")"></script>
     <script>
+        function initUpload(element, upload, options, callback) {
+            debugger;
+            var defaults = {
+                elem: '.UploadFile',
+                multiple: false,
+                before: function () {
+                    layer.load(1, { time: 2 * 1000 }); //上传loading
+                    //预读本地文件示例，不支持ie8
+                    obj.preview(function (index, file, result) {
+                        $(defaults.elem + 'Img').attr('src', result); //图片链接（base64）
+                    });
+                },
+                progress: function (n) {
+                    element.progress(defaults.elem + 'Progress', n + '%'); //可配合 layui 进度条元素使用
+                },
+                done: function (res, index, upload) {
+                    //上传完毕回调
+                    debugger;
+                    if (res.code == 200) {
+                        if (callback) {
+                            callback(res, index, upload)
+                        }
+                    }
+                }, error: function () {
+                    layer.msg("上传错误，重选上传");
+                    element.progress(defaults.elem + 'Progress', '0%');
+                }
+
+            };
+            defaults = $.extend(defaults, options);
+            if (upload) {
+                upload.render(defaults);
+            }
+        }
         layui.config({
             base: '~/lib/layui2.5.5/layui/lay/modules/' //静态资源所在路径
-        }).use(['form','upload'], function () {
+        }).use(['form', 'upload'], function () {
             var $ = layui.$, form = layui.form, upload = layui.upload;
-            upload.render({
-                elem: '.UploadFile' //绑定元素
-                ,multiple:true
-               , before: function (obj) {
-                   layer.load(2); //上传loading
-               }
-               , done: function (res, index, upload) {
-                   //上传完毕回调
-                    debugger;
-                   if (res.code ==200) { 
-                       //$('#FileName').val(res.name);
-                       //$("#FileUrl").val(res.src);
-                       //获取当前触发上传的元素
-                       var items = this.item;
-                       items.hide();
-                      }
-				}
-            }); 
+            debugger;
+            initUpload(upload, { elem: '.UploadFile' }, function (res, index, upload) {
+                layer.msg(res.msg)
+                debugger;
+            })
+            //        upload.render({
+            //            elem: '.UploadFile' //绑定元素
+            //            ,multiple:true
+            //           , before: function () {
+            //               layer.load(2, {time: 4*1000}); //上传loading
+            //           }
+            //           , done: function (res, index, upload) {
+            //               //上传完毕回调
+            //                debugger;
+            //               if (res.code ==200) {
+            //                   //$('#FileName').val(res.name);
+            //                   //$("#FileUrl").val(res.src);
+            //                   //获取当前触发上传的元素
+            //                   var items = this.item;
+            //                   items.hide();
+            //                  }
+            //}
+            //        });
 
-          
+
         });
     </script>
 </body>

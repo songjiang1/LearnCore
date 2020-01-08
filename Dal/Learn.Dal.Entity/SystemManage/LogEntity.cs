@@ -1,3 +1,4 @@
+using Learn.Util.Enum;
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -29,7 +30,7 @@ namespace Learn.Dal.Entity.BaseManage
         /// <summary>
         /// 分类Id 1-登陆2-访问3-操作4-异常
         /// </summary>
-        public int? category_id { get ; set ; }
+        public OperationTypeEnum category_id { get ; set ; }
 
        
         /// <summary>
@@ -116,7 +117,7 @@ namespace Learn.Dal.Entity.BaseManage
         /// <summary>
         /// 执行结果状态
         /// </summary>
-        public int? execute_result { get ; set ; }
+        public RequestTypeEnum execute_result { get ; set ; }
 
        
         /// <summary>

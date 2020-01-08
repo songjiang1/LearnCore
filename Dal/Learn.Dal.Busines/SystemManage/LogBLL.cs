@@ -33,8 +33,8 @@ namespace Learn.Dal.Busines.SystemManage
             //日志分类
             if (!queryParam["Category"].IsEmpty())
             {
-                int categoryId = queryParam["CategoryId"].ParseToInt();
-                expression = expression.And(t => t.category_id == categoryId);
+                int categoryId = queryParam["CategoryId"].ParseToInt(); 
+                expression = expression.And(t => t.category_id == (OperationTypeEnum)Enum.ToObject(typeof(OperationTypeEnum), categoryId));
             }
             //操作时间
             if (!queryParam["StartTime"].IsEmpty() && !queryParam["EndTime"].IsEmpty())
@@ -79,7 +79,7 @@ namespace Learn.Dal.Busines.SystemManage
         #endregion
 
         #region MyRegion 更新数据
-        public async Task<int> DeleteLog(int categoryId, int keepTime)
+        public async Task<int> DeleteLog(OperationTypeEnum categoryId, int keepTime)
         {
             DateTime operateTime = DateTime.Now;
             if (keepTime == 1)//保留近一周

@@ -89,6 +89,12 @@ namespace Learn.Bll.Repository
         {
             return await db.FindList<T>(condition);
         }
+        public async Task<IEnumerable<T>> FindList<T>(Expression<Func<T, bool>> condition, Pagination pagination) where T : class, new()
+        {
+            var data = await db.FindList<T>(condition, pagination.Sort, pagination.SortType.ToLower() == "asc" ? true : false, pagination.PageSize, pagination.PageIndex);
+            pagination.TotalCount = data.total;
+            return data.list;
+        }
         public async Task<IEnumerable<T>> FindList<T>(string strSql) where T : class
         {
             return await db.FindList<T>(strSql);

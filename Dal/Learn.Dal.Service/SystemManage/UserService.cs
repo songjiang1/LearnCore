@@ -111,7 +111,11 @@ namespace Learn.Dal.Service.SystemManage
                 throw;
             }
         }
-
+         
+        public async Task UpdateUser(UserEntity entity)
+        {
+            await this.BaseRepository().Update(entity);
+        }
         #endregion
 
 

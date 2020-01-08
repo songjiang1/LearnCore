@@ -13,8 +13,8 @@ namespace Learn.Bll.Repository
 {
     /// <summary>
     /// Copyright (c) 2018 合肥一沙软件
-    /// 创建人：刘括
-    /// 日 期：2018.10.18
+    /// 创建人：宋江
+    /// 日 期：2020.1.7
     /// 描 述：定义仓储模型中的数据标准操作接口
     /// </summary>
     public interface IRepository<T> where T : class, new()
@@ -75,6 +75,7 @@ namespace Learn.Bll.Repository
         Task<IEnumerable<T>> FindList<T>() where T : class, new();
         Task<IEnumerable<T>> FindList<T>(Func<T, object> orderby) where T : class, new();
         Task<IEnumerable<T>> FindList<T>(Expression<Func<T, bool>> condition) where T : class, new();
+        Task<IEnumerable<T>> FindList<T>(Expression<Func<T, bool>> condition, Pagination pagination) where T : class, new();
         Task<IEnumerable<T>> FindList<T>(string strSql) where T : class;
         Task<IEnumerable<T>> FindList<T>(string strSql, DbParameter[] dbParameter) where T : class; 
          
