@@ -39,7 +39,7 @@ namespace Learn.Dal.Service.SystemManage
             var expression = LinqExtensions.True<UserEntity>();
             expression = expression.And(t => t.is_enabled == true && t.is_delete == false);
             expression = expression.And(t => t.user_account == account);  
-            return this.BaseRepository().IQueryable(expression).Count() > 0 ? true : false;
+            return  this.BaseRepository().IQueryable(expression).Count() > 0 ? true : false;
         }
         public bool ExistMobile(string mobile)
         {
@@ -58,7 +58,7 @@ namespace Learn.Dal.Service.SystemManage
         #endregion
 
         #region MyRegion 提交数据
-        public async Task SaveForm(UserEntity entity)
+        public async  Task<int> SaveForm(UserEntity entity)
         {
             var db = this.BaseRepository().BeginTrans();
             try
@@ -104,6 +104,7 @@ namespace Learn.Dal.Service.SystemManage
                 //    }
                 //}
                 await db.Commit();
+                return 1;
             }
             catch
             {
@@ -112,9 +113,9 @@ namespace Learn.Dal.Service.SystemManage
             }
         }
          
-        public async Task UpdateUser(UserEntity entity)
+        public async Task<int> UpdateUser(UserEntity userEntity) 
         {
-            await this.BaseRepository().Update(entity);
+           return await this.BaseRepository().Update(userEntity);
         }
         #endregion
 

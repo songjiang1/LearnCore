@@ -9,10 +9,14 @@ namespace Learn.Dal.IService
 	/// UserRoleServices
 	/// </summary>	
     public interface IUserService :IBaseServices<UserEntity>
-	{ 
+	{
 		Task<UserEntity> CheckLogin(string userName);
-		Task<UserEntity> UpdateUser(UserEntity   userEntity);
-		
+		bool ExistAccount(string account);
+		bool ExistMobile(string mobile);
+		bool ExistEmail(string email);
+		Task<int> SaveForm(UserEntity userEntity);
+		Task<int> UpdateUser(UserEntity userEntity);
+
 	}
 }
 

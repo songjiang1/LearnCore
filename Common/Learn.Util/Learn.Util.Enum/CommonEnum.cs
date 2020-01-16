@@ -160,9 +160,9 @@ namespace Learn.Util.Enum
         /// </summary>
         [Description("移动登录")]
         AppLogin = 10
-    } 
+    }
     /// <summary>
-    /// 角色分类  
+    /// 角色分类  1-部门2-角色3-岗位4-职位5-工作组
     /// </summary>
     public enum RoleCategoryEnum
     {
@@ -193,7 +193,69 @@ namespace Learn.Util.Enum
         WorkingGroup = 5
         
     }
+    /// <summary>
+    /// 授权类型:1-仅限本人2-仅限本人及下属3-所在部门4-所在组织5-按明细设置
+    /// </summary>
+    public enum AuthorizationTypeEnum
+    {
+        /// <summary>
+        /// 仅限本人
+        /// </summary>
+        [Description("仅限本人")]
+        Department = 1,
+        /// <summary>
+        /// 仅限本人及下属
+        /// </summary>
+        [Description("仅限本人及下属")]
+        Role = 2,
+        /// <summary>
+        /// 所在部门
+        /// </summary>
+        [Description("所在部门")]
+        Post = 3,
+        /// <summary>
+        /// 所在组织
+        /// </summary>
+        [Description("所在组织")]
+        Position = 4,
+        /// <summary>
+        /// 按明细设置
+        /// </summary>
+        [Description("按明细设置")]
+        WorkingGroup = 5
+
+    }
 
 
-    
+    /// <summary>
+    /// 授权类型:项目类型:1-菜单2-按钮3-视图4表单
+    /// </summary>
+    public enum ViewTypeEnum
+    {
+        /// <summary>
+        /// 菜单
+        /// </summary>
+        [Description("菜单")]
+        Department = 1,
+        /// <summary>
+        /// 按钮
+        /// </summary>
+        [Description("按钮")]
+        Role = 2,
+        /// <summary>
+        /// 视图
+        /// </summary>
+        [Description("视图")]
+        Post = 3,
+        /// <summary>
+        /// 表单
+        /// </summary>
+        [Description("表单")]
+        Position = 4
+
+    }
+
+
+
+
 }

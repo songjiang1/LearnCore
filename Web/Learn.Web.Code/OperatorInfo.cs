@@ -22,8 +22,13 @@ namespace Learn.Web.Code
         public string ApiToken { get; set; }
         
         public bool IsSystem { get; set; }
-        
+
         public string HeadIcon { get; set; }
+        public string OpenId { get; set; }
+        public string Password { get; set; }
+        
+
+
         [NotMapped] 
         /// <summary>
         /// 用户数据权限
