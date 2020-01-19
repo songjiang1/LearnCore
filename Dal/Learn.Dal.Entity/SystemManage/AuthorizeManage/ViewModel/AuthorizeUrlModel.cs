@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Learn.Util.Enum;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -31,5 +32,9 @@ namespace Learn.Dal.Entity.SystemManage
         /// 名称
         /// </summary>
         public string FullName { set; get; }
+        /// <summary>
+        /// 类型
+        /// </summary>
+        public ViewTypeEnum ViewType { set; get; }
     }
 }

@@ -199,30 +199,35 @@ namespace Learn.Util.Enum
     public enum AuthorizationTypeEnum
     {
         /// <summary>
+        /// 所有权限
+        /// </summary>
+        [Description("所有权限")]
+        All = 0,
+        /// <summary>
         /// 仅限本人
         /// </summary>
         [Description("仅限本人")]
-        Department = 1,
+        OneSelf = 1,
         /// <summary>
         /// 仅限本人及下属
         /// </summary>
         [Description("仅限本人及下属")]
-        Role = 2,
+        OneSelfAndSubordinate = 2,
         /// <summary>
         /// 所在部门
         /// </summary>
         [Description("所在部门")]
-        Post = 3,
+        Department = 3,
         /// <summary>
         /// 所在组织
         /// </summary>
         [Description("所在组织")]
-        Position = 4,
+        Organization = 4,
         /// <summary>
         /// 按明细设置
         /// </summary>
         [Description("按明细设置")]
-        WorkingGroup = 5
+        DetailSetting = 5
 
     }
 
@@ -236,22 +241,22 @@ namespace Learn.Util.Enum
         /// 菜单
         /// </summary>
         [Description("菜单")]
-        Department = 1,
+        Menu = 1,
         /// <summary>
         /// 按钮
         /// </summary>
         [Description("按钮")]
-        Role = 2,
+        Button = 2,
         /// <summary>
         /// 视图
         /// </summary>
         [Description("视图")]
-        Post = 3,
+        View = 3,
         /// <summary>
         /// 表单
         /// </summary>
         [Description("表单")]
-        Position = 4
+        Form = 4
 
     }
 
